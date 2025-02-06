@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<a href="ai">실시간 스트리밍</a>
+<script type="text/javascript">
+  var button = document.querySelector("input[type=button]";
+
+  button.addEventListener("click", function() {
+  var form = document.getElementById("fileUploadForm");
+  var form_data = new FormData(form);
+  button.disabled = True;
+
+  var xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "http://localhost:80/java_service", true);
+
+  xhr.onload = function() {
+      if(xhr.status >= 200 && xhr.status <300 {
+          var response = JSON.parse(xhr.responseText);
+          var resultDiv = document.getElementById("result");
+          resultDiv.innerHTML = response.message + "<br>";
+          var img_src = "data:image/png;base64," + response.image;
+          var img = document.createElement("img");
+          img.src = img_src;
+          resultDiv.appendChild(img);
+          button.disabled = false;
+      }
+      else {
+          console.error("ERROR: " + xhr.statusText);
+          alert("fail " + xhr.statusText);
+          button.disabled = false;
+      }
+  }
+  xhr.onerror = function(){
+      console.error("ERROR : " + xhr.statusText);
+      alert("fail " + xhr.statusText);
+      button.disabled = false;
+  }
+  xhr.send(form_data);
+  })
+</script>
+</body>
+</html>
