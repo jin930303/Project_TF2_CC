@@ -2,10 +2,6 @@ import json
 import os
 from ultralytics import YOLO
 
-import json
-import os
-from ultralytics import YOLO
-
 # 1. JSON 파일이 있는 폴더 경로
 json_dir = "C:/Users/shk0349/Documents/차종분류/Final/json/train"
 images_dir = "C:/Users/shk0349/Documents/차종분류/Final/image/train"  # 이미지 폴더 경로
@@ -66,14 +62,23 @@ for file_name in os.listdir(json_dir):
             print(f"{file_name} - COCO 형식이 아닙니다.")
 
 if __name__ == '__main__':
-    model = YOLO("yolov8n.pt")  # YOLO 모델 로드
+    model = YOLO("yolov8n.pt")
 
     model.train(
-        data="data.yaml",  # 수정된 data.yaml 파일 경로
-        epochs=10,  # 훈련 에포크
-        imgsz=416,  # 작은 이미지 크기
-        batch=2,    # 배치 크기 줄이기
-        name="Car_Training ver.",
-        half=True    # 혼합 정밀도 훈련
+        data = "data.yaml",  # 수정된 data.yaml 파일 경로
+        epochs = 25,  # 훈련 에포크
+        imgsz = 416,  # 작은 이미지 크기
+        batch = 2,    # 배치 크기 줄이기
+        name = "Car_Training ver.",
+        half = True,    # 혼합 정밀도 훈련
+        patience = 10,  # 🚀 조기 종료 기준 (10~20)
+        optimizer = "adam",  # 🚀 Adam 사용 (메모리 절약 & 학습 안정성)
+        cache = False,  # ❌ GTX 1060은 VRAM 부족하므로 캐싱 비활성화
+        workers = 4,  # 🚀 CPU 코어 수에 맞춰 데이터 로딩 최적화
+        device = "cuda",  # 🚀 GPU 사용
+        cos_lr = True,  # 🚀 Cosine Learning Rate Scheduler 사용
+        multi_scale = False,  # ❌ GTX 1060에서는 메모리 부족 가능성 있으므로 비활성화
+        close_mosaic = 10,  # 🚀 마지막 10에포크 동안 Mosiac Augmentation 비활성화
+        resume = False  # 기존 체크포인트에서 재학습 여부
     )
 
