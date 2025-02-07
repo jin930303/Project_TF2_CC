@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+<div id="cctv_setting_part">
+    <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctvLink">
+        <h3>CCTV</h3>
+        <select id="cctv_url">
+            <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
+        </select>
+
+        <h3>객체</h3>
+        <select id="detect_objects">
+            <option value="total_object">전체</option>
+            <option value="car">승용차</option>
+            <option value="bus">버스</option>
+            <option value="truck">트럭</option>
+            <option value="pickup_truck">픽업트럭</option>
+            <option value="motor_cycle">오토바이</option>
+            <option value="etc">기타</option>
+        </select>
+        <input type="button" value="분석">
+    </form>
+</div>
+
+<script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
+
+<div id="cctv_part">
+    <div id="cctv_head">
+        <p>
+            <h3>CCTV 분석결과</h3>
+        </p>
+    </div>
+    <div id="cctv_detect_part"></div>
+</div>
+</body>
+</html>
