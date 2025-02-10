@@ -16,6 +16,9 @@ client.connect('localhost', 1883, 60)
 # 연결용 함수
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
+    client.subscribe(topic)
+
+detect_url = None
 
 # 객체 감지용 색상 함수
 def get_colors(num_colors):
@@ -23,18 +26,31 @@ def get_colors(num_colors):
     colors = [tuple(np.random.randint(0, 255, 3).tolist()) for _ in range(num_colors)]
     return colors
 
+def on_message(client, userdata, msg):
+    global detect_url
+    print(f"Message received: {msg.payload.decode()}")
+
+    # JSON 데이터 파싱
+    data = json.loads(msg.payload.decode())
+    cctv_url = data.get("cctv_url", "No URL")
+
+    if detect_url:
+        print(f"Updated detect_url: {detect_url}")
+
 class_names = model.names    # 모델에서 받은 클래스 이름
 num_classes = len(class_names)    # 클래스 번호
 colors = get_colors(num_classes)    # 시각박스 컬러색
 
 client.on_connect = on_connect    # 클라이언트 연결 정보
-cap = cv2.VideoCapture('rtsp://admin:mbc312AI!!@192.168.0.4:554/mbcai_2')    # rtsp 정보(vms 참고)
-    # 참고 URL : https://deep-learning-study.tistory.com/107
-    # 세팅 예시
-        # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-        # bRec = False
-        # prevTime = 0
+client.on_message = on_message
+client.loop_start()  # MQTT 메시지 루프 실행
+
+# detect_url이 설정될 때까지 대기
+while detect_url is None:
+    print("Waiting for MQTT message with cctv_url...")
+    time.sleep(1)
+
+cap = cv2.VideoCapture(detect_url)
 
 # ============================================== 전처리단계 종료 ==============================================
 

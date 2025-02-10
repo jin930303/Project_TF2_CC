@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src ="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
 <div id="cctv_setting_part">
-    <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctvLink">
+    <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
         <h3>CCTV</h3>
-        <select id="cctv_url">
+        <select id="cctv_url" name="cctv_url">
             <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
         </select>
 
@@ -36,7 +36,9 @@
             <h3>CCTV 분석결과</h3>
         </p>
     </div>
-    <div id="cctv_detect_part"></div>
+    <div id="cctv_detect_part">
+        <img id = "cctv_detect_view" width = "50%" height ="50%">
+    </div>
 </div>
 </body>
 </html>

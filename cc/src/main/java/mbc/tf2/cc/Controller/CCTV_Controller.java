@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class CCTV_Controller {
     @Value("${getType}")
     private String getType;
 
-    @GetMapping("/cctv")
+    @GetMapping("/")
     public String cctv(Model mo) {
         String URL = "https://openapi.its.go.kr:9443/cctvInfo?apiKey=" + apiKey
                 + "&type=" + roadtype
@@ -71,6 +73,7 @@ public class CCTV_Controller {
             e.printStackTrace();
         }
         mo.addAttribute("cctvList", cctvList);
-        return "cctv";
+        return "home";
     }
+
 }
