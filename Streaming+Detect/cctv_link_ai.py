@@ -26,16 +26,21 @@ def get_colors(num_colors):
     colors = [tuple(np.random.randint(0, 255, 3).tolist()) for _ in range(num_colors)]
     return colors
 
+# 메시지 처리 함수에서 cctv_url을 확인하고 VideoCapture에 전달
 def on_message(client, userdata, msg):
     global detect_url
-    print(f"Message received: {msg.payload.decode()}")
+    try:
+        data = json.loads(msg.payload.decode())
+        cctv_url = data.get("cctv_url", "No URL")
 
-    # JSON 데이터 파싱
-    data = json.loads(msg.payload.decode())
-    cctv_url = data.get("cctv_url", "No URL")
+        if cctv_url != "No URL":
+            detect_url = cctv_url
+            print(f"Updated detect_url: {detect_url}")
+        else:
+            print("No cctv_url found in the message.")
+    except Exception as e:
+        print(f"Error processing message: {e}")
 
-    if detect_url:
-        print(f"Updated detect_url: {detect_url}")
 
 class_names = model.names    # 모델에서 받은 클래스 이름
 num_classes = len(class_names)    # 클래스 번호
@@ -47,7 +52,6 @@ client.loop_start()  # MQTT 메시지 루프 실행
 
 # detect_url이 설정될 때까지 대기
 while detect_url is None:
-    print("Waiting for MQTT message with cctv_url...")
     time.sleep(1)
 
 cap = cv2.VideoCapture(detect_url)
