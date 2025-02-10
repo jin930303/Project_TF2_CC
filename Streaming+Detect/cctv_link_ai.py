@@ -8,7 +8,7 @@ import paho.mqtt.client as mqtt    # 브로커 추가 / mosquitto 지속실행 �
 import cv2
 import time
 
-model = YOLO("9t_adamw(jin).pt")
+model = YOLO("yolo11n.pt")
 client = mqtt.Client()    # mosquitto -c mosquitto.conf
 topic = '/cctv/objects'    # 경로
 client.connect('localhost', 1883, 60)
@@ -35,12 +35,10 @@ def on_message(client, userdata, msg):
 
         if cctv_url != "No URL":
             detect_url = cctv_url
-            print(f"Updated detect_url: {detect_url}")
-        else:
-            print("No cctv_url found in the message.")
+            print(f"detect_url: {detect_url}")
+
     except Exception as e:
         print(f"Error processing message: {e}")
-
 
 class_names = model.names    # 모델에서 받은 클래스 이름
 num_classes = len(class_names)    # 클래스 번호

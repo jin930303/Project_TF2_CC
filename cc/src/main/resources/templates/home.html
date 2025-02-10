@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src ="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <title>CCTV 분석 프로그램</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
 <div id="cctv_setting_part">
@@ -15,7 +15,7 @@
         </select>
 
         <h3>객체</h3>
-        <select id="detect_objects">
+        <select id="detect_objects" name="detect_objects">
             <option value="total_object">전체</option>
             <option value="car">승용차</option>
             <option value="bus">버스</option>
@@ -24,7 +24,7 @@
             <option value="motor_cycle">오토바이</option>
             <option value="etc">기타</option>
         </select>
-        <input type="button" value="분석">
+        <input type="submit" value="분석">
     </form>
 </div>
 
