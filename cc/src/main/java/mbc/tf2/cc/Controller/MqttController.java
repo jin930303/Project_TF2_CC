@@ -8,6 +8,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class MqttController {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping("/cctv_link")
-    public String cctv_link(@RequestParam("cctv_url") String cctv_url, @RequestParam("detect_objects") String detect_objects) {
+    public RedirectView cctv_link(@RequestParam("cctv_url") String cctv_url, @RequestParam("detect_objects") String detect_objects) {
         try {
             // ✅ UUID를 이용하여 Client ID 동적으로 생성
             String clientId = "spring-mqtt-" + UUID.randomUUID();
@@ -45,10 +46,14 @@ public class MqttController {
 
             // 연결 종료
             client.disconnect();
-            return "Message sent to Python: " + payload;
+            RedirectView redirectView = new RedirectView();
+            redirectView.setUrl("/");
+            return redirectView;
+
         } catch (MqttException | com.fasterxml.jackson.core.JsonProcessingException e) {
             e.printStackTrace();
-            return "Error sending message: " + e.getMessage();
-        }
+            RedirectView redirectView = new RedirectView();
+            redirectView.setUrl("/");
+            return redirectView;        }
     }
 }
