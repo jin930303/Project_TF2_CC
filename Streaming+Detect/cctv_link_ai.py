@@ -20,14 +20,18 @@ def on_connect(client, userdata, flags, rc):
 
 # 메시지 처리 함수
 detect_url = None
+detect_object = ""
 
 def on_message(client, userdata, msg):
     global detect_url, detect_object, cap, cctv_name
     try:
         data = json.loads(msg.payload.decode())
         cctv_url = data.get("cctv_url", "No URL")
-        detect_object = data.get("detect_objects", None)
+        new_detect_object = data.get("detect_objects", None)
         cctv_name = data.get("cctv_name", None)
+
+        if new_detect_object is not None:
+            detect_object = new_detect_object
 
         if cctv_url != "No URL" and cctv_url != detect_url:
             detect_url = cctv_url
@@ -73,34 +77,28 @@ def detect_objects(image: np.array, detect_object: str):
             label = class_names[int(class_id)]
             print(f"detect_object: {detect_object}, label: {label}")  # detect_object와 label 값 확인
             x1, y1, x2, y2 = map(int, box)
-            if detect_object == "car" and label == "car":
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[0], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[0], 2)
-            elif detect_object == "bus" and label == "bus":
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[1], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[1], 2)
-            elif detect_object == "pickup_truck" and label == "pickup_truck":
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[2], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[2], 2)
-            elif detect_object == "truck" and label == "truck":
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[3], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[3], 2)
-            elif detect_object == "etc" and label == "etc":
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[4], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[4], 2)
-            elif detect_object == "motor_cycle" and label == "motor_cycle":
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[5], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[5], 2)
+
+            if detect_object != "total_object" and label != detect_object:
+                continue
+
+            if label == "car":
+                color = colors[0]
+            elif label == "bus":
+                color = colors[1]
+            elif label == "pickup_truck":
+                color = colors[2]
+            elif label == "truck":
+                color = colors[3]
+            elif label == "etc":
+                color = colors[4]
+            elif label == "motor_cycle":
+                color = colors[5]
             else:
-                cv2.rectangle(image, (x1, y1), (x2, y2), colors[int(class_id)], 2)
-                cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, colors[int(class_id)], 2)
+                color = colors[int(class_id)]
+
+            cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+            cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
     return image
 
 # 객체 탐지 반복용 루프
