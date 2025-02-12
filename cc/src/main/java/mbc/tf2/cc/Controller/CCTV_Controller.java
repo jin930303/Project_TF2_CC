@@ -41,6 +41,7 @@ public class CCTV_Controller {
     @Value("${getType}")
     private String getType;
 
+
     @GetMapping("/")
     public String cctv(Model mo) {
         String URL = "https://openapi.its.go.kr:9443/cctvInfo?apiKey=" + apiKey
@@ -72,6 +73,7 @@ public class CCTV_Controller {
         catch (Exception e){
             e.printStackTrace();
         }
+        // cctv_setting_part에 사용할
         mo.addAttribute("cctvList", cctvList);
         return "home";
     }

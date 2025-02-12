@@ -1,0 +1,44 @@
+@charset:utf-8;
+
+/* 전체 화면 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 1200px;
+
+}
+
+#wrap {
+    background-color:red;
+    position: absolute;
+    transform: translate(-50%, 0);
+    /*transform: translate(-50%, -50%);*/
+    left: 50%;
+    /*top: 50%;*/
+}
+
+#cctv_detect_part {
+    max-width: 1200px;
+    height: calc(100% / 3);
+    max-height: 800px;
+    background-color: blue;
+}
+
+/*
+a {
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+}
+
+ul {
+    display: block;
+}
+
+li {
+    display: block;
+    list-style: none;
+}
+
+*/

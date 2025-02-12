@@ -16,7 +16,7 @@ client.on("message", (topic, message) => {
     try {
         const payload = JSON.parse(message.toString());
         const base64Image = payload.image;
-        const img = document.getElementById("cctv_detect_view")
+        const img = document.getElementById("cctv_detect_view");
         img.src = `data:image/jpg;base64,${base64Image}`;
     }
     catch(e) {

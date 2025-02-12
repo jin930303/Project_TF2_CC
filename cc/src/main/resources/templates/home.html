@@ -4,42 +4,62 @@
     <title>CCTV 분석 프로그램</title>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-<div id="cctv_setting_part">
-    <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
-        <h3>CCTV</h3>
-        <select id="cctv_url" name="cctv_url">
-            <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
-        </select>
-        <input type="hidden" id="cctv_name" name="cctv_name" value="">
-        <h3>객체</h3>
-        <select id="detect_objects" name="detect_objects">
-            <option value="total_object">전체</option>
-            <option value="car">승용차</option>
-            <option value="bus">버스</option>
-            <option value="truck">트럭</option>
-            <option value="pickup_truck">픽업트럭</option>
-            <option value="motor_cycle">오토바이</option>
-            <option value="etc">기타</option>
-        </select>
-        <input type="submit" value="분석">
-        <input type="reset" value="종료">
-    </form>
-</div>
-
-<script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
-<script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
-
-<div id="cctv_part">
-    <div id="cctv_head">
-        <p>
-        <h3>CCTV 분석결과</h3>
-        </p>
+<div id="wrap">
+    <div id="cctv_setting_part">
+        <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
+            <h3>CCTV</h3>
+            <select id="cctv_url" name="cctv_url">
+                <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
+            </select>
+            <input type="hidden" id="cctv_name" name="cctv_name" value="">
+            <h3>객체</h3>
+            <select id="detect_objects" name="detect_objects">
+                <option value="total_object">전체</option>
+                <option value="car">승용차</option>
+                <option value="bus">버스</option>
+                <option value="truck">트럭</option>
+                <option value="pickup_truck">픽업트럭</option>
+                <option value="motor_cycle">오토바이</option>
+                <option value="etc">기타</option>
+            </select>
+            <input type="submit" value="분석">
+            <input type="reset" value="종료">
+        </form>
     </div>
-    <div id="cctv_detect_part">
-        <img id = "cctv_detect_view" width = "50%" height = "50%">
+
+    <script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
+    <script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
+    <div id="cctv_buttons_part">
+        <ul>
+            <li>
+                <a href="#">사용할 CCTV를 선택해주세요</a>
+                <ul th:each="cctv : ${cctvList}">
+                    <li>
+                        <a href="#">닫기</a>
+                    </li>
+                    <li>
+                        <a th:href="${cctv['cctvurl']}">[(${cctv['cctvname']})]</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">탐지할 차량을 선택해주세요</a>
+            </li>
+        </ul>
+    </div>
+    <div id="cctv_part">
+        <div id="cctv_head">
+            <p>
+            <h3>CCTV 분석결과</h3>
+            </p>
+        </div>
+        <div id="cctv_detect_part">
+            <img id = "cctv_detect_view" width = "50%" height = "50%">
+        </div>
     </div>
 </div>
 <script type="text/javascript" th:src="@{/script/detect_start.js}"></script>
