@@ -30,7 +30,10 @@ public class MqttController {
     @PostMapping("/cctv_link")
     public RedirectView cctv_link(@RequestParam("cctv_url") String cctv_url,
                                   @RequestParam("cctv_name") String cctv_name,
-                                  @RequestParam("detect_objects") String detect_objects) {
+                                  @RequestParam("detect_available") String detect_available,
+                                  @RequestParam("detect_objects") String detect_objects,
+                                  @RequestParam("cctv_location") String cctv_location,
+                                  @RequestParam("roadtype") String roadtype) {
         try {
             // ✅ UUID를 이용하여 Client ID 동적으로 생성
             String clientId = "spring-mqtt-" + UUID.randomUUID();
@@ -46,6 +49,7 @@ public class MqttController {
             payloadMap.put("cctv_url", cctv_url);
             payloadMap.put("cctv_name", cctv_name);
             payloadMap.put("detect_objects", detect_objects);
+            payloadMap.put("detect_available", detect_available);
             String payload = objectMapper.writeValueAsString(payloadMap);
 
             // MQTT 메시지 발행
@@ -55,12 +59,14 @@ public class MqttController {
 
             // 연결 종료
             client.disconnect();
-        }
-        catch (MqttException | JsonProcessingException e) {
+        } catch (MqttException | JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        // ✅ 이전 URL을 유지하며 리다이렉트
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("/");
+        redirectView.setUrl("/cctv_type?cctv_location=" + cctv_location + "&roadtype=" + roadtype);
         return redirectView;
     }
+
 }
