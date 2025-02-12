@@ -5,6 +5,7 @@ import time
 import numpy as np
 import paho.mqtt.client as mqtt
 from ultralytics import YOLO
+import oracledb
 
 model = YOLO("11n_adamw_50(jin).pt")
 
@@ -21,6 +22,44 @@ def on_connect(client, userdata, flags, rc):
 # 메시지 처리 함수
 detect_url = None
 detect_object = ""
+
+# ================= Oracle DB 연결 =================
+# 실제 사용자, 비밀번호, DSN 정보로 수정하세요.
+connection = oracledb.connect(
+    user="c##tf2",
+    password="1234",
+    dsn="localhost:1521/xe"  # 예: "localhost:1521/orclpdb1"
+)
+cursor = connection.cursor()
+
+# ================= 전역 변수 및 초기화 =================
+detect_url = None
+detect_object = ""
+cctv_name = ""
+cap = None
+saved_detections = set()  # 중복 저장 방지
+
+
+# 객체 감지용 색상 생성 함수
+def get_colors(num_colors):
+    np.random.seed(0)
+    return [tuple(np.random.randint(0, 255, 3).tolist()) for _ in range(num_colors)]
+
+
+# 모델 관련 초기화 (클래스 이름을 직접 지정)
+class_names = {0: 'car', 1: 'bus', 2: 'pickup_truck', 3: 'truck', 4: 'etc', 5: 'motor_cycle'}
+num_classes = len(class_names)
+colors = get_colors(num_classes)
+
+# BOARD 테이블의 TAG_ID 매핑 (실제 TAG 테이블의 값에 맞게 수정)
+tag_id_map = {
+    "car": 1,
+    "bus": 2,
+    "pickup_truck": 3,
+    "truck": 4,
+    "etc": 5,
+    "motor_cycle": 6
+}
 
 def on_message(client, userdata, msg):
     global detect_url, detect_object, cap, cctv_name
@@ -99,6 +138,40 @@ def detect_objects(image: np.array, detect_object: str):
             cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
             cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
+
+            # DB에 저장: 중복 저장 방지 및 신뢰도 조건 (예: 0.6 이상)
+            detection_key = (label, x1, y1, x2, y2)
+            if detection_key not in saved_detections and confidence > 0.8:
+                saved_detections.add(detection_key)
+                # 객체 영역 잘라내기
+                cropped = image[y1:y2, x1:x2]
+                ret, buffer = cv2.imencode('.jpg', cropped)
+                if not ret:
+                    print("JPEG 인코딩 실패")
+                    continue
+                blob_data = buffer.tobytes()
+                detection_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+                # 새 ID 값을 시퀀스를 통해 가져오기
+                try:
+                    cursor.execute("SELECT id_seq.NEXTVAL FROM dual")
+                    new_id = cursor.fetchone()[0]
+                except Exception as e:
+                    print(f"시퀀스 조회 실패: {e}")
+                    new_id = int(time.time() * 1000)
+
+                tag_id = tag_id_map.get(label, 0)
+                sql = """
+                                INSERT INTO BOARD (ID, START_TIME, TITLE, TAG_ID, IMG_FILE)
+                                VALUES (:id, TO_TIMESTAMP(:start_time, 'YYYY-MM-DD HH24:MI:SS'), :title, :tag_id, :IMG_FILE)
+                            """
+                try:
+                    cursor.execute(sql, [new_id, detection_time, cctv_name, tag_id, blob_data])
+                    connection.commit()
+                    print(f"Inserted BOARD record with id: {new_id} for detection: {detection_key}")
+                    print(f"받은 cctv_name: {cctv_name}")
+                except Exception as e:
+                    print(f"DB 삽입 실패: {e}")
     return image
 
 # 객체 탐지 반복용 루프
@@ -135,3 +208,6 @@ while True:
 cap.release()    # VideoCapture 종료
 cv2.destroyAllWindows()    # 창 닫기
 client.disconnect()    # MQTT 연결 해제
+
+cursor.close()
+connection.close()
