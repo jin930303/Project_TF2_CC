@@ -6,7 +6,7 @@ import numpy as np
 import paho.mqtt.client as mqtt
 from ultralytics import YOLO
 
-model = YOLO("11n_adamw_50(jin).pt")
+model = YOLO("11n_adamw_scale.pt")
 
 # MQTT 설정
 client = mqtt.Client()
@@ -29,6 +29,7 @@ def on_message(client, userdata, msg):
         cctv_url = data.get("cctv_url", "No URL")
         new_detect_object = data.get("detect_objects", None)
         cctv_name = data.get("cctv_name", None)
+        detect_available = data.get("detect_available", None)
 
         if new_detect_object is not None:
             detect_object = new_detect_object
@@ -44,6 +45,9 @@ def on_message(client, userdata, msg):
             if not cap.isOpened():
                 print(f"❌ VideoCapture를 열 수 없습니다: {detect_url}")
                 return
+            if detect_available == "exit":
+                cap.release()
+                cv2.destroyAllWindows()
 
     except Exception as e:
         print(f"Error processing message: {e}")

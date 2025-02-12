@@ -14,6 +14,7 @@
             <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
         </select>
         <input type="hidden" id="cctv_name" name="cctv_name" value="">
+        <input type="hidden" id="detect_available" name="detect_available" value="ing">
         <h3>객체</h3>
         <select id="detect_objects" name="detect_objects">
             <option value="total_object">전체</option>
@@ -25,11 +26,12 @@
             <option value="etc">기타</option>
         </select>
         <input type="submit" value="분석">
-        <input type="reset" value="종료">
+        <input type="button" value="종료" id="detect_exit" name="detect_exit">
     </form>
 </div>
 
 <script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
+<script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
 <script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
 
 <div id="cctv_part">
@@ -42,6 +44,5 @@
         <img id = "cctv_detect_view" width = "50%" height = "50%">
     </div>
 </div>
-<script type="text/javascript" th:src="@{/script/detect_start.js}"></script>
 </body>
 </html>
