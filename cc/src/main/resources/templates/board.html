@@ -2,28 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>게시판 목록</title>
+  <title>목록</title>
 </head>
 <body>
-<h1>게시판 목록</h1>
+<h1>게시판</h1>
 
 <table border="1">
   <thead>
   <tr>
     <th>ID</th>
-    <th>Title</th>
-    <th>Start Time</th>
-    <th>Tag Name</th>
-    <th>Image</th>
+    <th>제목</th>
+    <th>작성일</th>
+    <th>태그</th>
+    <th>이미지</th>
   </tr>
   </thead>
-  <tbody id="boardTableBody">
-  <!-- JavaScript가 여기에 데이터를 삽입할 예정 -->
+  <tbody>
+  <tr th:each="board : ${boards}">
+    <td th:text="${board.id}"></td>
+    <td th:text="${board.title}"></td>
+    <td th:text="${board.startTime}"></td>
+    <td th:text="${board.tagName}"></td>
+    <td>
+      <img th:if="${board.base64ImgFile}" th:src="${board.base64ImgFile}" alt="이미지 없음" width="100">
+    </td>
+  </tr>
   </tbody>
 </table>
 
-<script type="text/javascript" th:src="@{/script/boardList.js}"></script>
+<!--  페이징 처리 -->
+<div id="pagination">
+  <a th:if="${currentPage > 1}" th:href="@{/board(page=${currentPage - 1}, size=5)}">이전</a>
 
-<a th:href="@{/}">이전</a>
+  <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:if="${i != currentPage}" th:href="@{/board(page=${i}, size=5)}" th:text="${i}"></a>
+            <span th:if="${i == currentPage}" th:text="${i}" style="font-weight: bold;"></span>
+        </span>
+
+  <a th:if="${currentPage < totalPages}" th:href="@{/board(page=${currentPage + 1}, size=5)}">다음</a>
+</div>
+
 </body>
 </html>
