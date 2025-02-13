@@ -6,8 +6,8 @@ import numpy as np
 import paho.mqtt.client as mqtt
 from ultralytics import YOLO
 import oracledb
-
-model = YOLO("11n_adamw_29earstop.pt")
+from datetime import datetime
+model = YOLO("11n_adamw_scale_secondver.pt")
 
 # MQTT 설정
 client = mqtt.Client()
@@ -117,11 +117,11 @@ def detect_objects(image: np.array, detect_object: str):
             cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
             cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
-            # DB에 저장: 중복 저장 방지 및 신뢰도 조건 (예: 0.6 이상)
+            # DB에 저장: 중복 저장 방지 및 신뢰도 0.6이상
             detection_key = (label, x1, y1, x2, y2)
             if detection_key not in saved_detections and confidence > 0.6:
                 current_time = time.time()
-                # 2초 이상 경과했을 때만 DB 저장 수행
+                # n초 이상 경과했을 때만 DB 저장 수행
                 if current_time - last_saved_time >= 1:
                     last_saved_time = current_time
                     saved_detections.add(detection_key)
@@ -130,10 +130,10 @@ def detect_objects(image: np.array, detect_object: str):
                     cropped = image[y1:y2, x1:x2]
                     ret, buffer = cv2.imencode('.jpg', cropped)
                     if not ret:
-                        print("JPEG 인코딩 실패")
+                        print("JPG 인코딩 실패")
                         continue
                     blob_data = buffer.tobytes()
-                    detection_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                    detection_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                     # 새 ID 값을 시퀀스를 통해 가져오기
                     try:
@@ -141,12 +141,11 @@ def detect_objects(image: np.array, detect_object: str):
                         new_id = cursor.fetchone()[0]
                     except Exception as e:
                         print(f"시퀀스 조회 실패: {e}")
-                        new_id = int(time.time() * 1000)
 
                     tag_id = int(class_id)
                     sql = """
                         INSERT INTO BOARD (ID, START_TIME, TITLE, TAG_ID, IMG_FILE)
-                        VALUES (:id, TO_TIMESTAMP(:start_time, 'YYYY-MM-DD HH24:MI:SS'), :title, :tag_id, :IMG_FILE)
+                       VALUES (:id, CAST(TO_DATE(:start_time, 'YYYY-MM-DD HH24:MI:SS') AS TIMESTAMP(0)), :title, :tag_id, :IMG_FILE)
                     """
                     try:
                         cursor.execute(sql, [new_id, detection_time, cctv_name, tag_id, blob_data])
