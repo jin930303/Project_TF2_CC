@@ -8,12 +8,39 @@
 </head>
 <body>
 <div id="cctv_setting_part">
+    <form th:action="@{/cctv_type}" method="get" id="cctv_type">
+        <h3>지역</h3>
+        <select id="cctv_location" name="cctv_location">
+            <option value="s_i_gg">서울/인천/경기도</option>
+            <option value="gw">강원도</option>
+            <option value="d_cn">대전/충청남도</option>
+            <option value="cb">충청북도</option>
+            <option value="d_gb">대구/경상북도</option>
+            <option value="b_u_gn">부산/울산/경상남도</option>
+            <option value="g_jn">광주/전라남도</option>
+            <option value="jb">전라북도</option>
+            <option value="jj">제주도</option>
+        </select>
+
+        <h3>도로유형</h3>
+        <select id="roadtype" name="roadtype">
+            <option value="ex">고속도로</option>
+            <option value="its">국도</option>
+        </select>
+        <input type="submit" value="적용">
+    </form>
+
     <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
         <h3>CCTV</h3>
         <select id="cctv_url" name="cctv_url">
             <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
         </select>
-        <input type="hidden" id="cctv_name" name="cctv_name" value="">
+
+        <input type="hidden" id="hidden_cctv_location" name="cctv_location" value="s_i_gg">
+        <input type="hidden" id="hidden_roadtype" name="roadtype" value="ex">
+        <input type="hidden" id="cctv_name" name="cctv_name" value="default">
+        <input type="hidden" id="detect_available" name="detect_available" value="ing">
+
         <h3>객체</h3>
         <select id="detect_objects" name="detect_objects">
             <option value="total_object">전체</option>
@@ -24,24 +51,29 @@
             <option value="motor_cycle">오토바이</option>
             <option value="etc">기타</option>
         </select>
+
         <input type="submit" value="분석">
-        <input type="reset" value="종료">
+        <input type="button" value="종료" id="detect_exit" name="detect_exit">
     </form>
 </div>
 
 <script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
+<script type="text/javascript" th:src="@{/script/redirect_url.js}"></script>
 <script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
+<script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
+
 
 <div id="cctv_part">
     <div id="cctv_head">
         <p>
+        <h3 th:text="${cctv_name}"></h3>
+        <h3 th:text="${send_object}"></h3>
         <h3>CCTV 분석결과</h3>
         </p>
-    </div>
+    </div> 
     <div id="cctv_detect_part">
         <img id = "cctv_detect_view" width = "50%" height = "50%">
     </div>
 </div>
-<script type="text/javascript" th:src="@{/script/detect_start.js}"></script>
 </body>
 </html>
