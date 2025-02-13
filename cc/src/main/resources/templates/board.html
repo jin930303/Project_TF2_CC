@@ -24,7 +24,7 @@
     <td th:text="${board.startTime}"></td>
     <td th:text="${board.tagName}"></td>
     <td>
-      <img th:if="${board.base64ImgFile}" th:src="${board.base64ImgFile}" alt="이미지 없음" width="100">
+      <img th:if="${board.base64ImgFile}" th:src="${board.base64ImgFile}" alt="이미지 없음" width="90" height="120">
     </td>
   </tr>
   </tbody>
@@ -32,15 +32,20 @@
 
 <!--  페이징 처리 -->
 <div id="pagination">
+  <!-- 이전 버튼 -->
   <a th:if="${currentPage > 1}" th:href="@{/board(page=${currentPage - 1}, size=5)}">이전</a>
 
-  <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-            <a th:if="${i != currentPage}" th:href="@{/board(page=${i}, size=5)}" th:text="${i}"></a>
-            <span th:if="${i == currentPage}" th:text="${i}" style="font-weight: bold;"></span>
-        </span>
+  <!-- 페이지네이션 (현재 페이지를 기준으로 앞뒤 2개씩만 표시) -->
+  <span th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1,
+                                        currentPage + 2 > totalPages ? totalPages : currentPage + 2)}">
+      <a th:if="${i != currentPage}" th:href="@{/board(page=${i}, size=5)}" th:text="${i}"></a>
+      <span th:if="${i == currentPage}" th:text="${i}" style="font-weight: bold;"></span>
+  </span>
 
+  <!-- 다음 버튼 -->
   <a th:if="${currentPage < totalPages}" th:href="@{/board(page=${currentPage + 1}, size=5)}">다음</a>
 </div>
+
 
 </body>
 </html>
