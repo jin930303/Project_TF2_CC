@@ -93,6 +93,8 @@ public class MqttController {
         //... 리다이렉트 시 cctv_name, send_object를 같이 보냄
         redirectAttributes.addFlashAttribute("cctv_name", cctv_name);
         redirectAttributes.addFlashAttribute("send_object", send_object);
+        redirectAttributes.addFlashAttribute("cctv_location", cctv_location);
+        redirectAttributes.addFlashAttribute("roadtype", roadtype);
 
         //... 이전 URL을 유지하며 리다이렉트
         return "redirect:/cctv_type?cctv_location=" + cctv_location + "&roadtype=" + roadtype;
