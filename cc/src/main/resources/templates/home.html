@@ -5,10 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height">
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
+<div id="wrap">
 <div id="cctv_setting_part">
     <form th:action="@{/cctv_type}" method="get" id="cctv_type">
+        <div class="choose_location">
         <h3>지역</h3>
         <select id="cctv_location" name="cctv_location">
             <option value="s_i_gg">서울/인천/경기도</option>
@@ -21,6 +24,7 @@
             <option value="jb">전라북도</option>
             <option value="jj">제주도</option>
         </select>
+        </div>
 
         <h3>도로유형</h3>
         <select id="roadtype" name="roadtype">
@@ -66,14 +70,13 @@
 <div id="cctv_part">
     <div id="cctv_head">
         <p>
-        <h3 th:text="${cctv_name}"></h3>
-        <h3 th:text="${send_object}"></h3>
-        <h3>CCTV 분석결과</h3>
+        <h3 th:text="${cctv_name + ' ' + send_object + ' 객체 탐지 결과'}"></h3>
         </p>
     </div> 
     <div id="cctv_detect_part">
         <img id = "cctv_detect_view" width = "50%" height = "50%">
     </div>
+</div>
 </div>
 </body>
 </html>

@@ -8,12 +8,11 @@ public class HomeContorller {
 
     @GetMapping("/")
     public String home(){
-        return "home";
+         return "home";
     }
 
     @GetMapping("/board")
     public String board(){
-
         return "board";
     }
 }

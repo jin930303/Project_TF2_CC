@@ -32,6 +32,7 @@ public class CCTV_Controller {
 
         String minX = "", maxX = "", minY = "", maxY = "";
 
+        //... 설정된 권역별 cctv 위도 및 경도 최소/최대값 설정
         if (cctv_location.equals("s_i_gg")) {
             minX = "126.346200";
             maxX = "127.847900";
@@ -87,6 +88,7 @@ public class CCTV_Controller {
             maxY = "33.642000";
         }
 
+        //... API URL 설정
         String URL = "https://openapi.its.go.kr:9443/cctvInfo?apiKey=" + apiKey
                 + "&type=" + roadtype
                 + "&cctvType=" + cctvType
@@ -96,28 +98,28 @@ public class CCTV_Controller {
                 + "&maxY=" + maxY
                 + "&getType=" + getType;
 
-        RestTemplate restTemplate = new RestTemplate();
-        String jsonResponse = restTemplate.getForObject(URL, String.class);
+        RestTemplate restTemplate = new RestTemplate();   //... RESTful 웹서비스 통신 설정
+        String jsonResponse = restTemplate.getForObject(URL, String.class);   //... API URL로 GET 요청 및 응답받은 JSON 데이터 저장
 
-        List<Map<String, Object>> cctvList = new ArrayList<>();
+        List<Map<String, Object>> cctvList = new ArrayList<>();   //... JSON 데이터의 각 항목을 Map으로 저장
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode root = objectMapper.readTree(jsonResponse);
+            ObjectMapper objectMapper = new ObjectMapper();   //... ObjectMapper 설정
+            JsonNode root = objectMapper.readTree(jsonResponse);   //... JSON 문자열을 JsonNode 트리구조로 변환
             JsonNode dataArray = root.path("response").path("data");
 
             if (dataArray.isArray()) {
                 for (JsonNode node : dataArray) {
-                    Map<String, Object> cctvData = objectMapper.convertValue(node, Map.class);
-                    cctvList.add(cctvData);
+                    Map<String, Object> cctvData = objectMapper.convertValue(node, Map.class);   //... Map 형태로 변환
+                    cctvList.add(cctvData);   //... cctvList에 데이터 추가
                 }
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
+
         mo.addAttribute("cctvList", cctvList);
         return "home";
     }
-
 }

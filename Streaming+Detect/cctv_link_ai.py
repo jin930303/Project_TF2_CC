@@ -7,7 +7,8 @@ import paho.mqtt.client as mqtt
 from ultralytics import YOLO
 import oracledb
 
-model = YOLO("11n_adamw_scale.pt")
+# 모델 설정
+model = YOLO("11n_adamw_29_early_stop.pt")
 
 # MQTT 설정
 client = mqtt.Client()
@@ -19,10 +20,11 @@ def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     client.subscribe(topic)
 
+# oracle db 계정 연결
 connection = oracledb.connect(
-    user="c##tf2",
-    password="1234",
-    dsn="localhost:1521/xe"  # 예: "localhost:1521/orclpdb1"
+    user = "c##tf2",
+    password = "1234",
+    dsn = "localhost:1521/xe"  # 예: "localhost:1521/orclpdb1"
 )
 cursor = connection.cursor()
 
@@ -30,8 +32,10 @@ cursor = connection.cursor()
 detect_url = None
 detect_object = ""
 cctv_name = ""
+cap = None
 saved_detections = set()
 
+# Java 데이터 수신 함수
 def on_message(client, userdata, msg):
     global detect_url, detect_object, cap, cctv_name
     try:
@@ -49,30 +53,32 @@ def on_message(client, userdata, msg):
 
         if cctv_url != "No URL" and cctv_url != detect_url:
             detect_url = cctv_url
-            print(f"detect_url: {detect_url}")
-            print(f"detect_object: {detect_object}")
-            print(f"cctv_name: {cctv_name}")
+            print(f"detect_url: {detect_url} / cctv_name: {cctv_name} / detect_object: {detect_object}")
+
             if cap is not None:
                 cap.release()  # 기존 스트리밍 종료
             cap = cv2.VideoCapture(detect_url)  # 새 URL로 스트리밍 시작
-            if not cap.isOpened():
-                print(f"❌ VideoCapture를 열 수 없습니다: {detect_url}")
-                return
+
             if detect_available == "exit":
                 cap.release()
                 cv2.destroyAllWindows()
 
+            if not cap.isOpened():
+                print(f"VideoCapture를 열 수 없습니다: {detect_url}")
+                return
+
+
     except Exception as e:
         print(f"Error processing message: {e}")
 
-# 객체 감지용 색상 함수
+# 객체별 색지정 함수
 def get_colors(num_colors):
     np.random.seed(0)
     colors = [tuple(np.random.randint(0, 255, 3).tolist()) for _ in range(num_colors)]
     return colors
 
-# 모델 관련 초기화
-class_names = {0: 'car', 1: 'bus', 2: 'pickup_truck', 3: 'truck', 4: 'etc', 5: 'motor_cycle'}
+# 모델 관련 사항
+class_names = {0: 'car', 1: 'bus', 2: 'pickup_truck', 3: 'truck', 4: 'etc', 5: 'motor_cycle'}    # 클래스 id별 name 설정
 num_classes = len(class_names)
 colors = get_colors(num_classes)
 
@@ -84,7 +90,7 @@ client.loop_start()
 
 # 모델을 이용한 객체탐지 함수
 def detect_objects(image: np.array, detect_object: str):
-    results = model(image, verbose=False)
+    results = model(image, verbose = False)
 
     for result in results:
         boxes = result.boxes.xyxy
@@ -116,10 +122,12 @@ def detect_objects(image: np.array, detect_object: str):
             cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
             cv2.putText(image, f'{label} {confidence:.2f}', (x1, y1),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
-            # DB에 저장: 중복 저장 방지 및 신뢰도 조건 (예: 0.6 이상)
+
+            # DB에 저장: 중복 저장 방지 및 신뢰도 조건 (예: 0.77 이상)
             detection_key = (label, x1, y1, x2, y2)
             if detection_key not in saved_detections and confidence > 0.77:
                 saved_detections.add(detection_key)
+
                 # 객체 영역 잘라내기
                 cropped = image[y1:y2, x1:x2]
                 ret, buffer = cv2.imencode('.jpg', cropped)
@@ -152,20 +160,18 @@ def detect_objects(image: np.array, detect_object: str):
     return image
 
 # 객체 탐지 반복용 루프
-cap = None
-
 while True:
     if detect_url is not None:
         if cap is None:
             cap = cv2.VideoCapture(detect_url)
             if not cap.isOpened():
-                print(f"❌ VideoCapture를 열 수 없습니다: {detect_url}")
+                print(f"VideoCapture를 열 수 없습니다: {detect_url}")
                 time.sleep(2)  # 연결 실패 시 재시도
 
         if cap is not None and cap.isOpened():
             ret, frame = cap.read()
             if not ret:
-                print("⚠️ 스트림이 끊겼습니다. 2초 후 다시 연결 시도...")
+                print("⚠스트림이 끊겼습니다. 2초 후 다시 연결 시도...")
                 cap.release()
                 time.sleep(2)  # 스트림 끊기면 재시도
                 continue
