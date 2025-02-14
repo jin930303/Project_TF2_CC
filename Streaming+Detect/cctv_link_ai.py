@@ -8,12 +8,12 @@ from ultralytics import YOLO
 import oracledb
 
 # 모델 설정
-model = YOLO("11n_adamw_29_early_stop.pt")
+model = YOLO("11n_admaw_2scale.pt")
 
 # MQTT 설정
 client = mqtt.Client()
 topic = '/cctv/objects'
-client.connect('localhost', 1883, 60)
+client.connect('192.168.0.221', 1883, 60)
 
 # MQTT 연결 콜백 함수
 def on_connect(client, userdata, flags, rc):
@@ -148,7 +148,7 @@ def detect_objects(image: np.array, detect_object: str):
                 tag_id = class_names.get(label, 0)
                 sql = """
                                 INSERT INTO BOARD (ID, START_TIME, TITLE, TAG_ID, IMG_FILE)
-                                VALUES (:id, TO_TIMESTAMP(:start_time, 'YYYY-MM-DD HH24:MI:SS'), :title, :tag_id, :IMG_FILE)
+                                VALUES (:id, CAST(TO_DATE(:start_time, 'YYYY-MM-DD HH24:MI:SS') AS TIMESTAMP(0)), :title, :tag_id, :IMG_FILE)
                             """
                 try:
                     cursor.execute(sql, [new_id, detection_time, cctv_name, tag_id, blob_data])
