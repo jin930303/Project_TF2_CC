@@ -8,10 +8,10 @@ public class BoardDTO {
     private String startTime;
     private String base64ImgFile;
 
-    // 기본 생성자 추가
+
     public BoardDTO() {}
 
-    // Getter & Setter 수동 추가
+
     public long getId() {
         return id;
     }
