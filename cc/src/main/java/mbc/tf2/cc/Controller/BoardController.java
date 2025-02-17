@@ -1,6 +1,7 @@
 package mbc.tf2.cc.Controller;
 
 import mbc.tf2.cc.boardDTO.BoardDTO;
+import mbc.tf2.cc.boardEntity.BoardEntity;
 import mbc.tf2.cc.boardService.BoardService;
 import mbc.tf2.cc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -44,37 +46,29 @@ public class BoardController {
         int startPage = ((page - 1) / groupSize) * groupSize + 1;
         int endPage = Math.min(startPage + groupSize - 1, totalPages);
 
-        String sql = "SELECT b.ID, " +
-                "       TO_CHAR(TO_DATE(b.START_TIME, 'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS') AS START_TIME, " +
-                "       b.TITLE, " +
-                "       t.NAME AS TAG_NAME, " +
-                "       b.IMG_FILE, " +
-                "       b.CONFIRM  " +
-                "FROM BOARD b " +
-                "JOIN TAG t ON b.TAG_ID = t.ID " +
-                "ORDER BY b.ID DESC " +
-                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        List<BoardEntity> boards = boardRepository.findjoin();
 
-        List<BoardDTO> boards = jdbcTemplate.query(sql, new Object[]{offset, size}, new RowMapper<BoardDTO>() {
-            @Override
-            public BoardDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                BoardDTO dto = new BoardDTO();
-                dto.setId(rs.getLong("ID"));
-                dto.setStartTime(rs.getString("START_TIME"));
-                dto.setTitle(rs.getString("TITLE"));
-                dto.setTagName(rs.getString("TAG_NAME"));
-                dto.setConfirm(rs.getString("CONFIRM"));
-                Blob blob = rs.getBlob("IMG_FILE");
-                if (blob != null) {
-                    byte[] imgBytes = blob.getBytes(1, (int) blob.length());
-                    String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(imgBytes);
-                    dto.setBase64ImgFile(base64Image);
-                } else {
-                    dto.setBase64ImgFile(null);
+        List<BoardDTO> dtolist = boards.stream().map(board -> {
+            BoardDTO dto = new BoardDTO();
+            dto.setId(board.getId());
+            dto.setStartTime(board.getStart_time());
+            dto.setConfirm(board.getConfirm());
+            dto.setTitle(board.getTitle());
+            dto.setTagName(board.getTag().getName());
+            Blob blob = board.getImg_file();
+            if(blob !=null){
+                try {
+                    byte[] bytes =blob.getBytes(1,(int) blob.length());
+                    String base64img = Base64.getEncoder().encodeToString(bytes);
+                    dto.setBase64ImgFile(base64img);
                 }
-                return dto;
+                catch (SQLException e){
+                    e.printStackTrace();
+                }
+
             }
-        });
+            return dto;
+    }).collect(Collectors.toList());
 
         mo.addAttribute("boards", boards);
         mo.addAttribute("currentPage", page);

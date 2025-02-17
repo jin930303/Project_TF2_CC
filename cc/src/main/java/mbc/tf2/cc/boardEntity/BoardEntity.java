@@ -17,7 +17,9 @@ public class BoardEntity {
     @Column(name = "start_time",columnDefinition = "char(17)")
     private String start_time;
     private String title;
-    private int tag_id;
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private TagEntity tag;
     private Blob img_file;
     @Column(name = "confirm",columnDefinition = "char(1)")
     private String confirm;
