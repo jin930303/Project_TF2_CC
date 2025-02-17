@@ -34,7 +34,7 @@ public class BoardController {
         int offset = (page - 1) * size;
 
         String sql = "SELECT b.ID, " +
-                "       TO_CHAR(b.START_TIME, 'YYYY-MM-DD HH24:MI:SS') AS START_TIME, " +
+                "       TO_CHAR(TO_DATE(b.START_TIME, 'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS') AS START_TIME, " +
                 "       b.TITLE, " +
                 "       t.NAME AS TAG_NAME, " +
                 "       b.IMG_FILE " +

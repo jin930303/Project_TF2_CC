@@ -1,4 +1,4 @@
-const broker = 'ws://localhost:9001';
+const broker = 'ws://192.168.0.221:9001';
 const topic = '/cctv/objects';
 
 const client = mqtt.connect(broker);
@@ -16,7 +16,7 @@ client.on("message", (topic, message) => {
     try {
         const payload = JSON.parse(message.toString());
         const base64Image = payload.image;
-        const img = document.getElementById("cctv_detect_view")
+        const img = document.getElementById("cctv_detect_view");
         img.src = `data:image/jpg;base64,${base64Image}`;
     }
     catch(e) {

@@ -8,8 +8,6 @@ public class HomeContorller {
 
     @GetMapping("/")
     public String home(){
-        return "home";
+         return "home";
     }
-
-
 }
