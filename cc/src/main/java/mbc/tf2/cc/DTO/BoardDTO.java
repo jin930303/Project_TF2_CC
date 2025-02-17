@@ -1,8 +1,7 @@
-package mbc.tf2.cc.boardDTO;
+package mbc.tf2.cc.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{top :: menu}"></div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height">
+    <link th:href="@{/css/cctv_manage_style.css}" rel="stylesheet">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+<div id="cctv_setting_part">
+    <div class="setting_upper_part">
+        <form th:action="@{/cctv_type}" method="get" id="cctv_type">
+            <!-- 지역 선택 -->
+            <div class="choose_location">
+                <h3>지역</h3>
+                <select id="cctv_location" name="cctv_location">
+                    <option value="s_i_gg">서울/인천/경기도</option>
+                    <option value="gw">강원도</option>
+                    <option value="d_cn">대전/충청남도</option>
+                    <option value="cb">충청북도</option>
+                    <option value="d_gb">대구/경상북도</option>
+                    <option value="b_u_gn">부산/울산/경상남도</option>
+                    <option value="g_jn">광주/전라남도</option>
+                    <option value="jb">전라북도</option>
+                    <option value="jj">제주도</option>
+                </select>
+            </div>
+
+            <!-- 도로 유형 선택 -->
+            <div class="choose_roadtype">
+                <input type="hidden" id="roadtype" name="roadtype" value="its" readonly>
+                <input type="submit" value="적용">
+            </div>
+        </form>
+    </div>
+
+    <div class="setting_lower_part">
+    <form th:action="@{/cctv_select}" method="post" id="cctv_select">
+        <!-- CCTV 선택 -->
+        <div class="choose_cctv">
+            <h3>CCTV</h3>
+            <select id="cctv_url" name="cctv_url">
+                <option th:each="cctv : ${cctvList}" th:value="${cctv['cctvurl']}" th:text="${cctv['cctvname']}"></option>
+            </select>
+            <input type="hidden" id="selected_cctv_location" name="selected_cctv_location" th:value="${selected_cctv_location}">
+            <input type="hidden" id="cctv_name" name="cctv_name" value="default">
+        </div>
+
+         <!-- 탐지할 객체 선택 -->
+        <div class="choose_object">
+            <input type="submit" value="추가">
+        </div>
+    </form>
+    </div>
+
+    <div id="selected_cctv">
+        <h3>CCTV 목록</h3>
+        <table>
+            <tr>
+                <th>지역</th><th>CCTV 이름</th><th>기타</th>
+            </tr>
+            <tr th:each="list : ${cctv_list}">
+                <td th:text="${list['cctv_location']}"></td>
+                <td th:text="${list['cctv_name']}"></td>
+                <td>
+                    <button type="button" th:onclick="|location.href='@{/cctv_list_del(cctv_name=${list.cctv_name})}'|">삭제</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/script/redirect_url.js}"></script>
+<script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
+</body>
+</html>

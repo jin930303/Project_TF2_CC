@@ -1,13 +1,12 @@
 package mbc.tf2.cc.Controller;
 
-import mbc.tf2.cc.boardDTO.BoardDTO;
-import mbc.tf2.cc.boardEntity.BoardEntity;
-import mbc.tf2.cc.boardService.BoardService;
-import mbc.tf2.cc.repository.BoardRepository;
+import mbc.tf2.cc.DTO.BoardDTO;
+import mbc.tf2.cc.Entity.BoardEntity;
+import mbc.tf2.cc.Service.BoardService;
+import mbc.tf2.cc.Repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Blob;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;

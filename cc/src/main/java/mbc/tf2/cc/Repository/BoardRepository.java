@@ -1,9 +1,7 @@
-package mbc.tf2.cc.repository;
+package mbc.tf2.cc.Repository;
 
 import jakarta.transaction.Transactional;
-import mbc.tf2.cc.boardDTO.BoardDTO;
-import mbc.tf2.cc.boardEntity.BoardEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import mbc.tf2.cc.Entity.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

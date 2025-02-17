@@ -8,6 +8,17 @@ public class HomeContorller {
 
     @GetMapping("/")
     public String home(){
-         return "home";
+         return "main";
     }
+
+    @GetMapping("/main")
+    public String main() {
+        return "main";
+    }
+
+    @GetMapping("/detect")
+    public String detect() {
+        return "detect";
+    }
+
 }
