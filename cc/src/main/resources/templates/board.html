@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <meta charset="UTF-8">
   <title>목록</title>
 </head>
@@ -15,6 +16,8 @@
     <th>작성일</th>
     <th>태그</th>
     <th>이미지</th>
+    <th>상태</th>
+    <th>확인/삭제</th>
   </tr>
   </thead>
   <tbody>
@@ -26,25 +29,39 @@
     <td>
       <img th:if="${board.base64ImgFile}" th:src="${board.base64ImgFile}" alt="이미지 없음" width="90" height="120">
     </td>
+    <td th:text="${board.confirm=='0'?'미확인':'확인'}" ></td>
+    <td><a th:href="@{/confirm(bid=${board.id})}" id="confirm" >확인</a>
+        <a th:href="@{/delete(bid=${board.id})}" id="deleteid">삭제</a></td>
   </tr>
   </tbody>
 </table>
-
+<script>
+  $(document).ready(function(){
+    $("#deleteid").on("click", function(event){
+      event.preventDefault();
+      if(confirm('정말로 삭제할까요?')) {
+        window.location.href = $(this).attr("href");
+      }
+    });
+  });
+</script>
 <!--  페이징 처리 -->
-<div id="pagination">
-  <!-- 이전 버튼 -->
-  <a th:if="${currentPage > 1}" th:href="@{/board(page=${currentPage - 1}, size=5)}">이전</a>
 
-  <!-- 페이지네이션 (현재 페이지를 기준으로 앞뒤 2개씩만 표시) -->
-  <span th:each="i : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1,
-                                        currentPage + 2 > totalPages ? totalPages : currentPage + 2)}">
-      <a th:if="${i != currentPage}" th:href="@{/board(page=${i}, size=5)}" th:text="${i}"></a>
-      <span th:if="${i == currentPage}" th:text="${i}" style="font-weight: bold;"></span>
+  <div id="pagination">
+    <!-- 이전 그룹 버튼 -->
+    <a th:if="${startPage > 1}"
+       th:href="@{/board(page=${startPage - 1}, size=${size})}">이전</a>
+
+    <!-- 페이지네이션 (5개 단위) -->
+    <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
+      <a th:if="${i != page}" th:href="@{/board(page=${i}, size=${size})}" th:text="${i}"></a>
+      <span th:if="${i == page}" th:text="${i}" style="font-weight: bold;"></span>
   </span>
 
-  <!-- 다음 버튼 -->
-  <a th:if="${currentPage < totalPages}" th:href="@{/board(page=${currentPage + 1}, size=5)}">다음</a>
-</div>
+    <!-- 다음 그룹 버튼 -->
+    <a th:if="${endPage < totalPages}"
+       th:href="@{/board(page=${endPage + 1}, size=${size})}">다음</a>
+  </div>
 
 
 </body>

@@ -1,5 +1,11 @@
 package mbc.tf2.cc.boardDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
 public class BoardDTO {
 
     private long id;
@@ -7,48 +13,10 @@ public class BoardDTO {
     private String title;
     private String startTime;
     private String base64ImgFile;
-
+    private String confirm;
 
     public BoardDTO() {}
 
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTagName() {
-        return tagName;
-    }
-
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getBase64ImgFile() {
-        return base64ImgFile;
-    }
-
-    public void setBase64ImgFile(String base64ImgFile) {
-        this.base64ImgFile = base64ImgFile;
-    }
 }

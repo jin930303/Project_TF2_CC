@@ -1,6 +1,8 @@
 package mbc.tf2.cc.Controller;
 
 import mbc.tf2.cc.boardDTO.BoardDTO;
+import mbc.tf2.cc.boardService.BoardService;
+import mbc.tf2.cc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,6 +26,12 @@ public class BoardController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    BoardService boardService;
+
+    @Autowired
+    BoardRepository boardRepository;
+
     @GetMapping("/board")
     public String getBoardList(
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size, Model mo )
@@ -32,12 +40,16 @@ public class BoardController {
         int totalCount = jdbcTemplate.queryForObject(countSql, Integer.class);
         int totalPages = (int) Math.ceil((double) totalCount / size);
         int offset = (page - 1) * size;
+        int groupSize = 5;
+        int startPage = ((page - 1) / groupSize) * groupSize + 1;
+        int endPage = Math.min(startPage + groupSize - 1, totalPages);
 
         String sql = "SELECT b.ID, " +
                 "       TO_CHAR(TO_DATE(b.START_TIME, 'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS') AS START_TIME, " +
                 "       b.TITLE, " +
                 "       t.NAME AS TAG_NAME, " +
-                "       b.IMG_FILE " +
+                "       b.IMG_FILE, " +
+                "       b.CONFIRM  " +
                 "FROM BOARD b " +
                 "JOIN TAG t ON b.TAG_ID = t.ID " +
                 "ORDER BY b.ID DESC " +
@@ -51,7 +63,7 @@ public class BoardController {
                 dto.setStartTime(rs.getString("START_TIME"));
                 dto.setTitle(rs.getString("TITLE"));
                 dto.setTagName(rs.getString("TAG_NAME"));
-
+                dto.setConfirm(rs.getString("CONFIRM"));
                 Blob blob = rs.getBlob("IMG_FILE");
                 if (blob != null) {
                     byte[] imgBytes = blob.getBytes(1, (int) blob.length());
@@ -68,7 +80,24 @@ public class BoardController {
         mo.addAttribute("currentPage", page);
         mo.addAttribute("totalPages", totalPages);
         mo.addAttribute("totalCount", totalCount);
-
+        mo.addAttribute("startPage",startPage);
+        mo.addAttribute("endPage",endPage);
         return "board";
     }
+
+    @GetMapping("/confirm")
+    public String confirm(@RequestParam("bid")long bid,Model mo )
+    {
+        boardService.confirm(bid);
+        return "redirect:/board";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("bid")long bid)
+    {
+        boardRepository.deleteById(bid);
+        return "redirect:/board";
+    }
+
+
 }
