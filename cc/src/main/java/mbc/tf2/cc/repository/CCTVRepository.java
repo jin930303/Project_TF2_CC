@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Repository;
+package mbc.tf2.cc.repository;
 
 import mbc.tf2.cc.Entity.CCTVEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

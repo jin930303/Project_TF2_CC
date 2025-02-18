@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Repository;
+package mbc.tf2.cc.repository;
 
 import jakarta.transaction.Transactional;
 import mbc.tf2.cc.DTO.BoardDTO;

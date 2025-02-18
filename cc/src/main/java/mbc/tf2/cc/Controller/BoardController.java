@@ -1,9 +1,8 @@
 package mbc.tf2.cc.Controller;
 
 import mbc.tf2.cc.DTO.BoardDTO;
-import mbc.tf2.cc.Entity.BoardEntity;
 import mbc.tf2.cc.Service.BoardService;
-import mbc.tf2.cc.Repository.BoardRepository;
+import mbc.tf2.cc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -13,12 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.Base64;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller

@@ -2,7 +2,7 @@ package mbc.tf2.cc.Service;
 
 import mbc.tf2.cc.DTO.CCTVDTO;
 import mbc.tf2.cc.Entity.CCTVEntity;
-import mbc.tf2.cc.Repository.CCTVRepository;
+import mbc.tf2.cc.repository.CCTVRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

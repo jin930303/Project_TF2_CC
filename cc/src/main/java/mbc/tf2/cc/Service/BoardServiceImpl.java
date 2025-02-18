@@ -2,7 +2,7 @@ package mbc.tf2.cc.Service;
 
 import mbc.tf2.cc.DTO.BoardDTO;
 import mbc.tf2.cc.Entity.BoardEntity;
-import mbc.tf2.cc.Repository.BoardRepository;
+import mbc.tf2.cc.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

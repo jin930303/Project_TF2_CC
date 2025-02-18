@@ -1,6 +1,7 @@
-package mbc.tf2.cc.memberDTO;
+package mbc.tf2.cc.Service;
 
 
+import mbc.tf2.cc.Entity.Member;
 import mbc.tf2.cc.repository.MemberRepository;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
