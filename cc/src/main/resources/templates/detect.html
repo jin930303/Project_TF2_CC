@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{top :: menu}"></div>
 <head>
     <title>CCTV 분석 프로그램</title>
     <meta charset="utf-8">
     <meta name="viewport" content="height=device-height">
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/detect_style.css}" rel="stylesheet">
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-<div id="wrap">
 <div id="cctv_setting_part">
     <div class="setting_upper_part">
         <form th:action="@{/cctv_type}" method="get" id="cctv_type">
@@ -73,24 +73,21 @@
         </div>
     </form>
     </div>
-</div>
+    <script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
+    <script type="text/javascript" th:src="@{/script/redirect_url.js}"></script>
+    <script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
+    <script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
 
-<script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
-<script type="text/javascript" th:src="@{/script/redirect_url.js}"></script>
-<script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
-<script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
-<script type="text/javascript" th:src="@{/script/home_control.js}"></script>
-
-<!-- 탐지 결과 표시 -->
-<div id="cctv_part">
-    <div id="cctv_head">
-        <h3 th:text="${(cctv_name != null ? cctv_name : '') + ' ' + (send_object != null ? send_object : '') + ' 객체 탐지 결과'}"></h3>
+    <!-- 탐지 결과 표시 -->
+    <div id="cctv_part">
+        <div id="cctv_head">
+            <h3 th:text="${(cctv_name != null ? cctv_name : '') + ' ' + (send_object != null ? send_object : '') + ' 객체 탐지 결과'}"></h3>
+        </div>
+        <div id="cctv_detect_part">
+            <img id = "cctv_detect_view">
+        </div>
     </div>
-    <div id="cctv_detect_part">
-        <img id = "cctv_detect_view">
-    </div>
-</div>
-</div>
 
+</div>
 </body>
 </html>

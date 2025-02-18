@@ -87,10 +87,11 @@ client.on_message = on_message
 client.loop_start()
 
 # ============================================== 전처리단계 종료 ==============================================
-
+last_saved_time = 0
 # 모델을 이용한 객체탐지 함수
 def detect_objects(image: np.array, detect_object: str):
     results = model(image, verbose = False)
+    global last_saved_time
 
     for result in results:
         boxes = result.boxes.xyxy
@@ -126,7 +127,11 @@ def detect_objects(image: np.array, detect_object: str):
             # DB에 저장: 중복 저장 방지 및 신뢰도 조건 (예: 0.77 이상)
             detection_key = (label, x1, y1, x2, y2)
             if detection_key not in saved_detections and confidence > 0.77:
-                saved_detections.add(detection_key)
+                current_time = time.time()
+                # 2초 이상 경과했을 때만 DB 저장 수행
+                if current_time - last_saved_time >= 1:
+                    last_saved_time = current_time
+                    saved_detections.add(detection_key)
 
                 # 객체 영역 잘라내기
                 cropped = image[y1:y2, x1:x2]
@@ -145,7 +150,7 @@ def detect_objects(image: np.array, detect_object: str):
                     print(f"시퀀스 조회 실패: {e}")
                     new_id = int(time.time() * 1000)
 
-                tag_id = class_names.get(label, 0)
+                tag_id = int(class_id)
                 sql = """
                                 INSERT INTO BOARD (ID, START_TIME, TITLE, TAG_ID, IMG_FILE)
                                 VALUES (:id, CAST(TO_DATE(:start_time, 'YYYY-MM-DD HH24:MI:SS') AS TIMESTAMP(0)), :title, :tag_id, :IMG_FILE)

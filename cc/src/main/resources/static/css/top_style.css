@@ -1,0 +1,37 @@
+@charset:utf-8;
+/* navbar 설정 */
+    .navbar-inverse {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        background-color: rgba(255, 255, 255, 0.5) !important; /* 흰색, 투명도 50% */
+        border-color: rgba(255, 255, 255, 0.5) !important; /* 테두리도 동일한 투명도 적용 */
+        border-bottom: 2px solid #94c3ef !important; /* 바 하단 검은색 라인 */
+    }
+
+    /* 기본 링크 스타일 - hover 상태에서 색상 변화 없음 */
+    .navbar-inverse .navbar-nav > li > a {
+        color: #000 !important;  /* 기본 글씨 색상 검정 */
+        background-color: transparent !important;  /* 배경색 투명 */
+    }
+    /* 상단 메뉴바 (스크롤 내려오는거) */
+    /* hover 상태에서 색상 및 배경 변화 제거 */
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color: white !important;  /* hover 상태에서도 색상 변화 없음 */
+        background-color: #94c3ef !important;  /* 배경색 변화 없음 */
+    }
+
+    /* Home 버튼 */
+    /* Active 상태에서만 스타일 적용 */
+    .navbar-inverse .navbar-nav > li.active > a {
+        color: #white !important;  /* active 상태에서 더 어두운 글씨색 */
+        border-radius: 4px;  /* 모서리 둥글게 */
+    }
+
+    /* 타이틀 영역 */
+    .navbar-inverse .container-fluid .navbar-header > a{
+        font-family: Arial, sans-serif;
+        font-size: 25px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #666666;
+    }

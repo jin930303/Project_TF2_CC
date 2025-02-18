@@ -2,10 +2,15 @@ package mbc.tf2.cc.Controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mbc.tf2.cc.DTO.CCTVDTO;
+import mbc.tf2.cc.Entity.CCTVEntity;
+import mbc.tf2.cc.Service.CCTVService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class CCTV_Controller {
+public class CCTVController {
 
     @Value("${apiKey}")
     private String apiKey;
@@ -25,12 +30,63 @@ public class CCTV_Controller {
     @Value("${getType}")
     private String getType;
 
+    @Autowired
+    CCTVService cs;
+
+    @GetMapping("/cctv_manage")
+    public String cctv_manage(Model mo) {
+        List<CCTVEntity> cctv_list= cs.select_cctv();
+        mo.addAttribute("cctv_list", cctv_list);
+        return "cctv_manage";
+    }
+
+    @PostMapping("/cctv_select")
+    public String cctv_select(@RequestParam("cctv_url") String cctv_url,
+                              @RequestParam("selected_cctv_location") String cctv_location,
+                              @RequestParam("cctv_name") String cctv_name,
+                              CCTVDTO dto, Model mo) {
+        if (cctv_location.equals("s_i_gg")) {
+            cctv_location = "서울/인천/경기도";
+        }
+        else if (cctv_location.equals("gw")) {
+            cctv_location = "강원도";
+        }
+        else if (cctv_location.equals("d_cn")) {
+            cctv_location = "대전/충청남도";
+        }
+        else if (cctv_location.equals("cb")) {
+            cctv_location = "충청북도";
+        }
+        else if (cctv_location.equals("d_gb")) {
+            cctv_location = "대구/경상북도";
+        }
+        else if (cctv_location.equals("b_u_gn")) {
+            cctv_location = "부산/울산/경상남도";
+        }
+        else if (cctv_location.equals("g_jn")) {
+            cctv_location = "광주/전라남도";
+        }
+        else if (cctv_location.equals("jb")) {
+            cctv_location = "전라북도";
+        }
+        else if (cctv_location.equals("jj")) {
+            cctv_location = "제주도";
+        }
+        dto.setCctv_location(cctv_location);
+        dto.setCctv_name(cctv_name);
+        dto.setCctvurl(cctv_url);
+        cs.insert_cctv(dto);
+        List<CCTVEntity> cctv_list= cs.select_cctv();
+        mo.addAttribute("cctv_list", cctv_list);
+        return "cctv_manage";
+    }
+
     @GetMapping("/cctv_type")
     public String cctv(Model mo,
                        @RequestParam("cctv_location") String cctv_location,
                        @RequestParam("roadtype") String roadtype) {
 
-        String minX = "", maxX = "", minY = "", maxY = "";
+        String minX = "", maxX = "", minY = "", maxY = "", location = "";
 
         //... 설정된 권역별 cctv 위도 및 경도 최소/최대값 설정
         if (cctv_location.equals("s_i_gg")) {
@@ -118,8 +174,20 @@ public class CCTV_Controller {
         catch (Exception e){
             e.printStackTrace();
         }
-
+        List<CCTVEntity> cctv_list= cs.select_cctv();
+        mo.addAttribute("cctv_list", cctv_list);
         mo.addAttribute("cctvList", cctvList);
-        return "home";
+        mo.addAttribute("selected_cctv_location", cctv_location);
+        return "cctv_manage";
+
+
+    }
+
+    @GetMapping("/cctv_list_del")
+    public String cctv_list_del(Model mo, @RequestParam("cctv_name") String cctv_name) {
+        cs.delete_cctv_list(cctv_name);
+        List<CCTVEntity> cctv_list= cs.select_cctv();
+        mo.addAttribute("cctv_list", cctv_list);
+        return "cctv_manage";
     }
 }
