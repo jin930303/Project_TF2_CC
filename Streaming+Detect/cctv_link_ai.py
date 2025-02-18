@@ -62,6 +62,7 @@ def on_message(client, userdata, msg):
             if detect_available == "exit":
                 cap.release()
                 cv2.destroyAllWindows()
+                print("스트리밍을 중단하였습니다.")
 
             if not cap.isOpened():
                 print(f"VideoCapture를 열 수 없습니다: {detect_url}")
