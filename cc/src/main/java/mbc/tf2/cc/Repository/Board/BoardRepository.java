@@ -1,10 +1,7 @@
 package mbc.tf2.cc.Repository;
 
 import jakarta.transaction.Transactional;
-import mbc.tf2.cc.DTO.BoardDTO;
-import mbc.tf2.cc.Entity.BoardEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import mbc.tf2.cc.Entity.Board.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

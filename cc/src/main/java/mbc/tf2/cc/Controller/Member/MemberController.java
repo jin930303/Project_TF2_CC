@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Controller;
+package mbc.tf2.cc.Controller.Member;
 
 
 import mbc.tf2.cc.Entity.Member.MemberEntity;

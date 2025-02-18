@@ -1,31 +1,19 @@
 package mbc.tf2.cc.Controller.Board;
 
 import mbc.tf2.cc.DTO.Board.BoardDTO;
-import mbc.tf2.cc.Entity.Board.BoardEntity;
+import mbc.tf2.cc.Repository.BoardRepository;
 import mbc.tf2.cc.Service.Board.BoardService;
-import mbc.tf2.cc.Repository.Board.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.Base64;
-import java.util.List;
-import java.util.stream.Collectors;
-
-
 @Controller
 public class BoardController {
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     BoardService boardService;
@@ -35,8 +23,8 @@ public class BoardController {
 
     @GetMapping("/board")
     public String getBoardList(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size, Model mo )
-    {
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size, Model mo ) {
+
         Page<BoardDTO> boardPage = boardService.getBoardList(page, size);
 
         int totalPages = boardPage.getTotalPages();

@@ -1,7 +1,6 @@
 package mbc.tf2.cc.Service.Board;
 
-import mbc.tf2.cc.DTO.BoardDTO;
-import mbc.tf2.cc.Entity.BoardEntity;
+import mbc.tf2.cc.DTO.Board.BoardDTO;
 import org.springframework.data.domain.Page;
 
 public interface BoardService {
