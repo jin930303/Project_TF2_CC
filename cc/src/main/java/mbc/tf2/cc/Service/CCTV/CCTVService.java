@@ -1,7 +1,7 @@
-package mbc.tf2.cc.Service;
+package mbc.tf2.cc.Service.CCTV;
 
-import mbc.tf2.cc.DTO.CCTVDTO;
-import mbc.tf2.cc.Entity.CCTVEntity;
+import mbc.tf2.cc.DTO.CCTV.CCTVDTO;
+import mbc.tf2.cc.Entity.CCTV.CCTVEntity;
 
 import java.util.List;
 

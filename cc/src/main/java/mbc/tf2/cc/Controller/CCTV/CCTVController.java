@@ -1,10 +1,10 @@
-package mbc.tf2.cc.Controller;
+package mbc.tf2.cc.Controller.CCTV;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import mbc.tf2.cc.DTO.CCTVDTO;
-import mbc.tf2.cc.Entity.CCTVEntity;
-import mbc.tf2.cc.Service.CCTVService;
+import mbc.tf2.cc.DTO.CCTV.CCTVDTO;
+import mbc.tf2.cc.Entity.CCTV.CCTVEntity;
+import mbc.tf2.cc.Service.CCTV.CCTVService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

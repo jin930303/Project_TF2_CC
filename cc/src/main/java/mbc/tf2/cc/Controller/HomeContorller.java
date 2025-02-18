@@ -15,10 +15,4 @@ public class HomeContorller {
     public String main() {
         return "main";
     }
-
-    @GetMapping("/detect")
-    public String detect() {
-        return "detect";
-    }
-
 }

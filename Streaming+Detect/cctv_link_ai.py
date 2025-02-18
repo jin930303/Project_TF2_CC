@@ -78,7 +78,7 @@ def get_colors(num_colors):
     return colors
 
 # 모델 관련 사항
-class_names = {0: 'car', 1: 'bus', 2: 'pickup_truck', 3: 'truck', 4: 'etc', 5: 'motor_cycle'}    # 클래스 id별 name 설정
+class_names = {0: 'car', 1: 'bus', 2: 'pickup_truck', 3: 'truck', 4: 'motor_cycle'}    # 클래스 id별 name 설정
 num_classes = len(class_names)
 colors = get_colors(num_classes)
 
@@ -112,10 +112,8 @@ def detect_objects(image: np.array, detect_object: str):
                 color = colors[2]
             elif label == "truck":
                 color = colors[3]
-            elif label == "etc":
-                color = colors[4]
             elif label == "motor_cycle":
-                color = colors[5]
+                color = colors[4]
             else:
                 color = colors[int(class_id)]
 

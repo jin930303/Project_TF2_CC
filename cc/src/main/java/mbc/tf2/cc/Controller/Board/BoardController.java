@@ -1,9 +1,9 @@
-package mbc.tf2.cc.Controller;
+package mbc.tf2.cc.Controller.Board;
 
-import mbc.tf2.cc.DTO.BoardDTO;
-import mbc.tf2.cc.Entity.BoardEntity;
-import mbc.tf2.cc.Service.BoardService;
-import mbc.tf2.cc.Repository.BoardRepository;
+import mbc.tf2.cc.DTO.Board.BoardDTO;
+import mbc.tf2.cc.Entity.Board.BoardEntity;
+import mbc.tf2.cc.Service.Board.BoardService;
+import mbc.tf2.cc.Repository.Board.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.JdbcTemplate;

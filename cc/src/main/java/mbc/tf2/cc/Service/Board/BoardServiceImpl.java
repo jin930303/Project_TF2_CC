@@ -1,6 +1,6 @@
-package mbc.tf2.cc.Service;
+package mbc.tf2.cc.Service.Board;
 
-import mbc.tf2.cc.Repository.BoardRepository;
+import mbc.tf2.cc.Repository.Board.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

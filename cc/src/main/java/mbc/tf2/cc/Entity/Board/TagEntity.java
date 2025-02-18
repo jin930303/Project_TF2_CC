@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Entity;
+package mbc.tf2.cc.Entity.Board;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Controller;
+package mbc.tf2.cc.Controller.CCTV;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,8 +32,8 @@ public class MqttController {
                             @RequestParam("cctv_name") String cctv_name,
                             @RequestParam("detect_available") String detect_available,
                             @RequestParam("detect_objects") String detect_objects,
-                            @RequestParam("cctv_location") String cctv_location,
-                            @RequestParam("roadtype") String roadtype,
+                            @RequestParam("hidden_cctv_location") String cctv_location,
+                            @RequestParam("hidden_roadtype") String roadtype,
                             RedirectAttributes redirectAttributes) {
         try {
             //... UUID를 이용하여 Client ID 동적으로 생성
@@ -85,9 +85,6 @@ public class MqttController {
         }
         else if (detect_objects.equals("motor_cycle")) {
             send_object = "오토바이";
-        }
-        else if (detect_objects.equals("etc")) {
-            send_object = "기타";
         }
 
         //... 리다이렉트 시 cctv_name, send_object를 같이 보냄

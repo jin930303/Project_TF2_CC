@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Service;
+package mbc.tf2.cc.Service.Board;
 
 public interface BoardService {
 

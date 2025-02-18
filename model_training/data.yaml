@@ -2,5 +2,5 @@ train : "C:/Users/shk0349/Documents/차종분류/Final/total/train"
 val : "C:/Users/shk0349/Documents/차종분류/Final/total/val"
 nc : 6
 name : [
-    "Car", "Bus", "Pickup_Truck", "Truck", "ETC", "Motorcycle"
+    "Car", "Bus", "Pickup_Truck", "Truck", "Motorcycle"
 ]
