@@ -1,4 +1,4 @@
-package mbc.tf2.cc.memberDTO;
+package mbc.tf2.cc.Entity.Member;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Table(name = "MEMBER")
 @Getter
 @Setter
-public class Member {
+public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")

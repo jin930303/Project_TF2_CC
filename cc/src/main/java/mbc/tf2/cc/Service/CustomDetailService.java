@@ -1,7 +1,8 @@
 package mbc.tf2.cc.Service;
 
+import mbc.tf2.cc.Entity.Member.MemberEntity;
+import mbc.tf2.cc.Repository.Member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,23 +34,16 @@ public class CustomDetailService implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         //GrantedAuthority: 현재 사용자의 권한 admin or user를 role로 표시(role=역할)
 
-        MemberEntity memberEntity = memberRepository.findOneById(id);
-        //findOneById의 정보를 가져와서 user에 담음
-
-        if (memberEntity.getState().equals("대기")) {
-            throw new BadCredentialsException("계정이 승인 대기 중입니다.");
-        }
-        else if (memberEntity.getState().equals("보류")) {
-            throw new BadCredentialsException("계정이 승인이 보류되었습니다.");
-        }
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberId(id);
+        //findByMemberId 정보를 가져와서 user에 담음
 
         // 그 이후 auth에 따라 역할 설정
-        if (memberEntity.getAuth() == 1) {
+        if (memberEntity.get().getAuth().equals("Admin")) {
             grantedAuthorities.add(new SimpleGrantedAuthority("Admin"));
-            return new User(memberEntity.getId(), memberEntity.getPw(), grantedAuthorities);
-        } else if (memberEntity.getAuth() == 2) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("Normal"));
-            return new User(memberEntity.getId(), memberEntity.getPw(), grantedAuthorities);
+            return new User(memberEntity.get().getMemberPw(), memberEntity.get().getMemberPw(), grantedAuthorities);
+        } else if (memberEntity.get().getAuth().equals("USER")) {
+            grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+            return new User(memberEntity.get().getMemberId(), memberEntity.get().getMemberPw(), grantedAuthorities);
         } else {
             throw new UsernameNotFoundException("can not find User : " + id);
         }
