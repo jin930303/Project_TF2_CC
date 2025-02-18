@@ -22,10 +22,14 @@ public class CCTV_Auth_Entity {
     @Column(name = "cctv_name")
     String cctv_name;
 
+    @Column(name = "cctv_add_confirm")
+    String cctv_add_confirm;
+
     @Builder
-    public CCTV_Auth_Entity(Long cctv_auth_num, String id, String cctv_name){
+    public CCTV_Auth_Entity(Long cctv_auth_num, String id, String cctv_name, String cctv_add_confirm){
         this.cctv_auth_num = cctv_auth_num;
         this.id = id;
         this.cctv_name = cctv_name;
+        this.cctv_add_confirm = cctv_add_confirm;
     }
 }

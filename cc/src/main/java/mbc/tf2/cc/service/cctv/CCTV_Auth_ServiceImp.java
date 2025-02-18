@@ -25,6 +25,21 @@ public class CCTV_Auth_ServiceImp implements CCTV_Auth_Service {
     }
 
     @Override
+    public List<CCTV_Auth_DTO> select_user_cctv_all() {
+        return car.user_cctv_all();
+    }
+
+    @Override
+    public void auth_update_confirm(long cctvAuthNum) {
+        car.update_confirm(cctvAuthNum);
+    }
+
+    @Override
+    public void auth_update_wait(long cctvAuthNum) {
+        car.update_wait(cctvAuthNum);
+    }
+
+    @Override
     public void insert_cctv_auth(CCTV_Auth_Entity dto) {
         car.save(dto);
     }

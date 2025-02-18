@@ -12,4 +12,11 @@ public interface CCTV_Auth_Service {
     List<CCTV_Auth_DTO> select_user_cctv(String userId);
 
     void user_cctv_del(long cctvAuthNum);
+
+    List<CCTV_Auth_DTO> select_user_cctv_all();
+
+    void auth_update_confirm(long cctvAuthNum);
+
+    void auth_update_wait(long cctvAuthNum);
+
 }

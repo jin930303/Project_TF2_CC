@@ -57,6 +57,7 @@ public class CCTV_Auth_Controller {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         dto.setId(user_id);
         dto.setCctv_name(cctv_name);
+        dto.setCctv_add_confirm("대기");
         CCTV_Auth_Entity cae = dto.entity();
         cas.insert_cctv_auth(cae);
         return "redirect:/cctv_add_auth";

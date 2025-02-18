@@ -34,6 +34,7 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
 	// Hibernate Validator 의존성 추가
 	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
 	// javax validation API 의존성 (필요한 경우)
