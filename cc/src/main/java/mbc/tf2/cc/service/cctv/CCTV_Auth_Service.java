@@ -10,4 +10,6 @@ public interface CCTV_Auth_Service {
     void insert_cctv_auth(CCTV_Auth_Entity cae);
 
     List<CCTV_Auth_DTO> select_user_cctv(String userId);
+
+    void user_cctv_del(long cctvAuthNum);
 }

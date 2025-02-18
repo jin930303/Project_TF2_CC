@@ -49,7 +49,6 @@ public class Security {
         .and()
         .authorizeRequests()
         .requestMatchers("/**", "/css/**", "/js/**", "/image/**").permitAll()
-        .requestMatchers("/**").hasAnyAuthority("Admin","Normal")  // 로그인 전용
         .requestMatchers("/**").hasAuthority("Admin")  // Admin 전용
         .requestMatchers("/**").hasAuthority("Normal") // Normal 전용
         .anyRequest().authenticated() // 그 외는 인증 필요
@@ -58,8 +57,8 @@ public class Security {
         .permitAll()
         .loginPage("/login")
         .loginProcessingUrl("/loginProcess")
-        .usernameParameter("id")
-        .passwordParameter("pw")
+        .usernameParameter("memberId")
+        .passwordParameter("password")
         .defaultSuccessUrl("/")
         .failureUrl("/")
         .successHandler(new AuthenticationSuccessHandler() {

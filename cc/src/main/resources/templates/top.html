@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="menu">
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="menu"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <link th:href="@{/css/top_style.css}" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,16 +23,20 @@
 
       <li class="active"><a href="board">탐지기록</a></li>
 
-      <li class="active"><a href="cctv_manage">CCTV 관리</a></li>
-
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><p id="nowtime"></p></a></li>
+      <li class="active"><a href="cctv_manage" sec:authorize="hasAuthority('ADMIN')">CCTV 관리</a></li>
+      <li class="active"><a href="#" sec:authorize="hasAuthority('ADMIN')">관리자님 반갑습니다.</a></li>
 
-      <li><a href="register"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
-      <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
-      <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
+      <li class="active"><a href="cctv_add_auth" sec:authorize="hasAuthority('USER')">CCTV 추가</a></li>
+      <li class="active"><a href="#" sec:authorize="hasAuthority('USER')">회원님 반갑습니다.</a></li>
+
+
+      <li><a href="register" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-user"></span> 회원가입</a>
+      <li><a href="login" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-log-in"></span> 로그인</a>
+      <li><a href="logout" sec:authorize="isAuthenticated()"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a>
     </ul>
   </div>
 </nav>

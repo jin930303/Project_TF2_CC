@@ -38,14 +38,15 @@ public class CustomDetailService implements UserDetailsService {
         //findByMemberId 정보를 가져와서 user에 담음
 
         // 그 이후 auth에 따라 역할 설정
-        if (memberEntity.get().getAuth().equals("Admin")) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("Admin"));
-            return new User(memberEntity.get().getMemberPw(), memberEntity.get().getMemberPw(), grantedAuthorities);
+        if (memberEntity.get().getAuth().equals("ADMIN")) {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
+            return new User(memberEntity.get().getMemberId(), memberEntity.get().getMemberPw(), grantedAuthorities);
         } else if (memberEntity.get().getAuth().equals("USER")) {
             grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
             return new User(memberEntity.get().getMemberId(), memberEntity.get().getMemberPw(), grantedAuthorities);
         } else {
             throw new UsernameNotFoundException("can not find User : " + id);
         }
+
     }
 }

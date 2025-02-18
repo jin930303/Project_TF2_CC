@@ -10,7 +10,7 @@
 <body>
 <div id="cctv_setting_part">
     <div id="selected_cctv">
-        <h3>CCTV 목록</h3>
+        <h3>전체 CCTV 목록</h3>
         <table>
             <tr>
                 <th>지역</th><th>CCTV 이름</th><th>기타</th>
@@ -20,6 +20,21 @@
                 <td th:text="${list['cctv_name']}"></td>
                 <td>
                     <button type="button" th:onclick="|location.href='@{/cctv_auth_select(cctv_name=${list.cctv_name})}'|">추가</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="user_cctv_list">
+        <table>
+            <h3>승인된 CCTV 목록</h3>
+            <tr>
+                <th>지역</th><th>CCTV 이름</th><th>기타</th>
+            </tr>
+            <tr th:each="user_list : ${user_cctv_list}">
+                <td th:text="${user_list['cctv_location']}"></td>
+                <td th:text="${user_list['cctv_name']}"></td>
+                <td>
+                    <button type="button" th:onclick="|location.href='@{/user_cctv_del(cctv_auth_num=${user_list.cctv_auth_num})}'|">삭제</button>
                 </td>
             </tr>
         </table>

@@ -39,14 +39,5 @@ public class MemberController {
         return "login";
     }
 
-    // 로그인 처리
-    @PostMapping("/login")
-    public String login(@RequestParam String memberId, @RequestParam String password, Model model) {
-        if (memberService.validateLogin(memberId, password)) {
-            return "main"; // 로그인 성공 시 홈으로 이동
-        } else {
-            model.addAttribute("error", "Invalid Credentials");
-            return "login"; // 로그인 실패 시 오류 메시지와 함께 로그인 페이지로 돌아가
-        }
-    }
+
 }
