@@ -8,12 +8,12 @@ from ultralytics import YOLO
 import oracledb
 
 # 모델 설정
-model = YOLO("11n_admaw_2scale.pt")
+model = YOLO("11n_adamw_class5.pt")
 
 # MQTT 설정
 client = mqtt.Client()
 topic = '/cctv/objects'
-client.connect('192.168.0.221', 1883, 60)
+client.connect('localhost', 1883, 60)
 
 # MQTT 연결 콜백 함수
 def on_connect(client, userdata, flags, rc):
@@ -174,7 +174,7 @@ while True:
         if cap is not None and cap.isOpened():
             ret, frame = cap.read()
             if not ret:
-                print("⚠스트림이 끊겼습니다. 2초 후 다시 연결 시도...")
+                print("스트림이 끊겼습니다. 2초 후 다시 연결 시도...")
                 cap.release()
                 time.sleep(2)  # 스트림 끊기면 재시도
                 continue

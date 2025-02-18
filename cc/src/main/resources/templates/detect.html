@@ -16,13 +16,12 @@
         <div class="choose_cctv">
             <h3>CCTV</h3>
             <select id="cctv_url" name="cctv_url">
-                <option th:each="cctv : ${user_cctv_list}" th:value="${cctv.cctvurl}" th:text="${cctv.cctv_name}"></option>
+                <option th:each="cctv : ${user_cctv_list}" th:value="${cctv.cctvurl}" th:text="${cctv.cctv_name}"</option>
+
             </select>
 
-            <input type="hidden" id="hidden_cctv_location" name="hidden_cctv_location" value="">
-            <input type="hidden" id="hidden_roadtype" name="hidden_roadtype" value="its">
             <input type="hidden" id="cctv_name" name="cctv_name" value="default">
-            <input type="hidden" id="detect_available" name="detect_available" value="ing">
+            <input type="hidden" id="detect_available" name="detect_available" value="">
 
         </div>
 
@@ -38,12 +37,13 @@
                 <option value="motor_cycle">오토바이</option>
             </select>
             <input type="submit" value="분석">
-            <input type="button" value="종료" id="detect_exit" name="detect_exit">
+            <button type="button" onclick="setDetectAvailableExit()">종료</button>
+            <script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
+            <button type="button" th:onclick="|location.href='@{/cctv_add_auth}'|">CCTV 추가</button>
         </div>
     </form>
     </div>
     <script type="text/javascript" th:src="@{/script/cctv_detect.js}"></script>
-    <script type="text/javascript" th:src="@{/script/redirect_url.js}"></script>
     <script type="text/javascript" th:src="@{/script/update_cctvname.js}"></script>
     <script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
 

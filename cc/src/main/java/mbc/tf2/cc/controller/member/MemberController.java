@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
 
@@ -31,7 +30,7 @@ public class MemberController {
             model.addAttribute("error", errorMessage);
             return "register"; // 오류가 있으면 등록 페이지로 돌아가고 오류 메시지 전달
         }
-        return "redirect:/member/login";
+        return "redirect:/login";
     }
 
     // 로그인 페이지
@@ -44,7 +43,7 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@RequestParam String memberId, @RequestParam String password, Model model) {
         if (memberService.validateLogin(memberId, password)) {
-            return "home"; // 로그인 성공 시 홈으로 이동
+            return "main"; // 로그인 성공 시 홈으로 이동
         } else {
             model.addAttribute("error", "Invalid Credentials");
             return "login"; // 로그인 실패 시 오류 메시지와 함께 로그인 페이지로 돌아가

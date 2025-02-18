@@ -1,13 +1,11 @@
-document.addEventListener("DOMContentLoaded", function() {
-    function updateCctvName() {
-        var cctvSelect = document.getElementById('cctv_url');
-        var selectedCctvName = cctvSelect.options[cctvSelect.selectedIndex].text;
-        document.getElementById('cctv_name').value = selectedCctvName;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    // CCTV URL select box와 숨겨진 CCTV name input을 가져옴
+    const cctvSelect = document.getElementById("cctv_url");
+    const hiddenCctvName = document.getElementById("cctv_name");
 
-    // CCTV 선택 시 자동으로 실행되도록 이벤트 추가
-    document.getElementById('cctv_url').addEventListener('change', updateCctvName);
-
-    // 페이지 로드 시 초기 값 설정
-    updateCctvName();
+    // CCTV URL이 변경될 때마다 cctv_name 값을 업데이트
+    cctvSelect.addEventListener("change", function () {
+        // 선택된 option의 텍스트 값(cctv_name)을 가져와 숨겨진 input에 설정
+        hiddenCctvName.value = cctvSelect.options[cctvSelect.selectedIndex].text;
+    });
 });

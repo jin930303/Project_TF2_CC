@@ -45,7 +45,7 @@ public class Security {
         /* @formatter:off */
         http
         .csrf()
-        .ignoringRequestMatchers("/cctv_select", "/cctv_link")  // 특정 경로에서만 CSRF 비활성화
+        .ignoringRequestMatchers("/**")  // 특정 경로에서만 CSRF 비활성화
         .and()
         .authorizeRequests()
         .requestMatchers("/**", "/css/**", "/js/**", "/image/**").permitAll()

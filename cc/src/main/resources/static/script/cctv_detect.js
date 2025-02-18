@@ -1,4 +1,4 @@
-const broker = 'ws://192.168.0.221:9001';
+const broker = 'ws://localhost:9001';
 const topic = '/cctv/objects';
 
 const client = mqtt.connect(broker);

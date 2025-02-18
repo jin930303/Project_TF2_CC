@@ -13,6 +13,7 @@ public class CCTV_Auth_Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 기본 키 설정
+    @Column(name = "cctv_auth_num")
     Long cctv_auth_num;
 
     @Column(name = "id")

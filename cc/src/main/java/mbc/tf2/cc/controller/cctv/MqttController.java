@@ -32,8 +32,6 @@ public class MqttController {
                             @RequestParam("cctv_name") String cctv_name,
                             @RequestParam("detect_available") String detect_available,
                             @RequestParam("detect_objects") String detect_objects,
-                            @RequestParam("hidden_cctv_location") String cctv_location,
-                            @RequestParam("hidden_roadtype") String roadtype,
                             RedirectAttributes redirectAttributes) {
         try {
             //... UUID를 이용하여 Client ID 동적으로 생성
@@ -90,11 +88,9 @@ public class MqttController {
         //... 리다이렉트 시 cctv_name, send_object를 같이 보냄
         redirectAttributes.addFlashAttribute("cctv_name", cctv_name);
         redirectAttributes.addFlashAttribute("send_object", send_object);
-        redirectAttributes.addFlashAttribute("cctv_location", cctv_location);
-        redirectAttributes.addFlashAttribute("roadtype", roadtype);
 
         //... 이전 URL을 유지하며 리다이렉트
-        return "redirect:/cctv_type?cctv_location=" + cctv_location + "&roadtype=" + roadtype;
+        return "redirect:/detect";
     }
 
 }

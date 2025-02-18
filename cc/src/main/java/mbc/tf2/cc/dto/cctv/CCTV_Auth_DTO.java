@@ -8,10 +8,11 @@ import mbc.tf2.cc.entity.cctv.CCTV_Auth_Entity;
 @AllArgsConstructor
 public class CCTV_Auth_DTO {
 
-
     private Long cctv_auth_num;
     private String id;
     private String cctv_name;
+    private String cctvurl;
+    private String cctv_location;
 
     public CCTV_Auth_Entity entity(){
         return CCTV_Auth_Entity.builder()

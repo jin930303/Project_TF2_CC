@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{top :: menu}"></div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height">
+    <link th:href="@{/css/cctv_manage_style.css}" rel="stylesheet">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+<div id="cctv_setting_part">
+    <div id="selected_cctv">
+        <h3>CCTV 목록</h3>
+        <table>
+            <tr>
+                <th>지역</th><th>CCTV 이름</th><th>기타</th>
+            </tr>
+            <tr th:each="list : ${cctv_list}">
+                <td th:text="${list['cctv_location']}"></td>
+                <td th:text="${list['cctv_name']}"></td>
+                <td>
+                    <button type="button" th:onclick="|location.href='@{/cctv_auth_select(cctv_name=${list.cctv_name})}'|">추가</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
