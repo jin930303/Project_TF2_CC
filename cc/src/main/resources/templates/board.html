@@ -27,7 +27,7 @@
     <td th:text="${board.startTime}"></td>
     <td th:text="${board.tagName}"></td>
     <td>
-      <img th:if="${board.base64ImgFile}" th:src="${board.base64ImgFile}" alt="이미지 없음" width="90" height="120">
+      <img th:src="@{'data:image/jpeg;base64,' + ${board.base64ImgFile}}" alt="이미지 없음" width="90" height="120">
     </td>
     <td th:text="${board.confirm=='0'?'미확인':'확인'}" ></td>
     <td><a th:href="@{/confirm(bid=${board.id})}" id="confirm" >확인</a>
@@ -47,21 +47,19 @@
 </script>
 <!--  페이징 처리 -->
 
-  <div id="pagination">
-    <!-- 이전 그룹 버튼 -->
-    <a th:if="${startPage > 1}"
-       th:href="@{/board(page=${startPage - 1}, size=${size})}">이전</a>
+<div id="pagination">
+  <!-- 이전 그룹 버튼 -->
+  <a th:if="${startPage > 1}" th:href="@{/board(page=${startPage - 1}, size=${size})}">이전</a>
 
-    <!-- 페이지네이션 (5개 단위) -->
-    <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
+  <!-- 페이지네이션 (5개 단위) -->
+  <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
       <a th:if="${i != page}" th:href="@{/board(page=${i}, size=${size})}" th:text="${i}"></a>
       <span th:if="${i == page}" th:text="${i}" style="font-weight: bold;"></span>
-  </span>
+    </span>
 
-    <!-- 다음 그룹 버튼 -->
-    <a th:if="${endPage < totalPages}"
-       th:href="@{/board(page=${endPage + 1}, size=${size})}">다음</a>
-  </div>
+  <!-- 다음 그룹 버튼 -->
+  <a th:if="${endPage < totalPages}" th:href="@{/board(page=${endPage + 1}, size=${size})}">다음</a>
+</div>
 
 
 </body>

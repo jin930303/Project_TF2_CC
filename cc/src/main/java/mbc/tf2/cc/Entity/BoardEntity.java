@@ -16,15 +16,18 @@ public class BoardEntity {
     private Long id;
 
     @Column(name = "start_time",columnDefinition = "char(17)")
-    private String start_time;
+    String startTime;
+
     private String title;
 
     @ManyToOne
     @JoinColumn(name = "tag_id")
-    private TagEntity tag;
+    private TagEntity tagName;
+
     private Blob img_file;
 
     @Column(name = "confirm", columnDefinition = "char(1)")
     private String confirm;
+
 
 }
