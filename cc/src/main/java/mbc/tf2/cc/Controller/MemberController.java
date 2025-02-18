@@ -1,8 +1,8 @@
-package mbc.tf2.cc.Controller.Member;
+package mbc.tf2.cc.Controller;
 
 
-import mbc.tf2.cc.Entity.Member.MemberEntity;
-import mbc.tf2.cc.Service.Member.MemberService;
+import mbc.tf2.cc.memberDTO.Member;
+import mbc.tf2.cc.memberDTO.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ public class MemberController {
     // 회원가입 페이지
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        model.addAttribute("member", new MemberEntity());
+        model.addAttribute("member", new Member());
         return "register";
     }
 
     // 회원가입 처리
     @PostMapping("/register")
-    public String register(@ModelAttribute MemberEntity member, Model model) {
+    public String register(@ModelAttribute Member member, Model model) {
         String errorMessage = memberService.registerMember(member);
         if (errorMessage != null) {
             model.addAttribute("error", errorMessage);

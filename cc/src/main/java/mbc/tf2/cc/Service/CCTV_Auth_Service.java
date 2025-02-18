@@ -1,6 +1,6 @@
-package mbc.tf2.cc.Service.CCTV;
+package mbc.tf2.cc.Service;
 
-import mbc.tf2.cc.Entity.CCTV.CCTV_Auth_Entity;
+import mbc.tf2.cc.Entity.CCTV_Auth_Entity;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package mbc.tf2.cc.Controller.CCTV;
+package mbc.tf2.cc.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

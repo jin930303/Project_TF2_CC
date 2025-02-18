@@ -1,7 +1,7 @@
 package mbc.tf2.cc.Repository;
 
 import jakarta.transaction.Transactional;
-import mbc.tf2.cc.Entity.Board.BoardEntity;
+import mbc.tf2.cc.Entity.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoardRepository extends JpaRepository<BoardEntity,Long> {
+public interface BoardRepository extends JpaRepository<mbc.tf2.cc.Entity.BoardEntity,Long> {
 
     @Modifying
     @Transactional

@@ -1,7 +1,7 @@
 package mbc.tf2.cc.Service;
 
-import mbc.tf2.cc.Entity.Member.MemberEntity;
-import mbc.tf2.cc.Repository.Member.MemberRepository;
+import mbc.tf2.cc.memberDTO.Member;
+import mbc.tf2.cc.Repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,7 +34,7 @@ public class CustomDetailService implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         //GrantedAuthority: 현재 사용자의 권한 admin or user를 role로 표시(role=역할)
 
-        Optional<MemberEntity> memberEntity = memberRepository.findByMemberId(id);
+        Optional<Member> memberEntity = memberRepository.findByMemberId(id);
         //findByMemberId 정보를 가져와서 user에 담음
 
         // 그 이후 auth에 따라 역할 설정

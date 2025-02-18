@@ -1,8 +1,8 @@
-package mbc.tf2.cc.DTO.CCTV;
+package mbc.tf2.cc.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import mbc.tf2.cc.Entity.CCTV.CCTVEntity;
+import mbc.tf2.cc.Entity.CCTVEntity;
 
 @Data
 @AllArgsConstructor

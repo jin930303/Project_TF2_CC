@@ -1,7 +1,7 @@
-package mbc.tf2.cc.Service.CCTV;
+package mbc.tf2.cc.Service;
 
-import mbc.tf2.cc.Entity.CCTV.CCTV_Auth_Entity;
-import mbc.tf2.cc.Repository.CCTV.CCTV_Auth_Repository;
+import mbc.tf2.cc.Entity.CCTV_Auth_Entity;
+import mbc.tf2.cc.Repository.CCTV_Auth_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

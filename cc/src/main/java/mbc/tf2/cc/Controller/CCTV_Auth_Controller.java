@@ -1,7 +1,7 @@
-package mbc.tf2.cc.Controller.CCTV;
+package mbc.tf2.cc.Controller;
 
-import mbc.tf2.cc.Entity.CCTV.CCTV_Auth_Entity;
-import mbc.tf2.cc.Service.CCTV.CCTV_Auth_Service;
+import mbc.tf2.cc.Entity.CCTV_Auth_Entity;
+import mbc.tf2.cc.Service.CCTV_Auth_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;

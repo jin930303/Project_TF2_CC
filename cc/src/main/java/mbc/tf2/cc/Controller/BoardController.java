@@ -1,8 +1,8 @@
-package mbc.tf2.cc.Controller.Board;
+package mbc.tf2.cc.Controller;
 
-import mbc.tf2.cc.DTO.Board.BoardDTO;
+import mbc.tf2.cc.DTO.BoardDTO;
 import mbc.tf2.cc.Repository.BoardRepository;
-import mbc.tf2.cc.Service.Board.BoardService;
+import mbc.tf2.cc.Service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;

@@ -1,8 +1,7 @@
-package mbc.tf2.cc.Service.Member;
+package mbc.tf2.cc.memberDTO;
 
 
-import mbc.tf2.cc.Entity.Member.MemberEntity;
-import mbc.tf2.cc.Repository.Member.MemberRepository;
+import mbc.tf2.cc.Repository.MemberRepository;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class MemberService {
     }
 
     // 회원가입
-    public String registerMember(MemberEntity member) {
+    public String registerMember(Member member) {
         // 아이디 중복 검사
         if (memberRepository.findByMemberId(member.getMemberId()).isPresent()) {
             return "이미 사용 중인 아이디입니다.";
@@ -34,12 +33,12 @@ public class MemberService {
 
     // 로그인 검증
     public boolean validateLogin(String memberId, String password) {
-        Optional<MemberEntity> memberOpt = memberRepository.findByMemberId(memberId);
+        Optional<Member> memberOpt = memberRepository.findByMemberId(memberId);
         if (memberOpt.isEmpty()) {
             return false; // 아이디가 존재하지 않으면 로그인 실패
         }
 
-        MemberEntity member = memberOpt.get();
+        Member member = memberOpt.get();
         return passwordEncoder.matches(password, member.getMemberPw()); // 비밀번호 검증
     }
 }
