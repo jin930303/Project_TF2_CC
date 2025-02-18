@@ -34,7 +34,7 @@ public class CCTV_Auth_Controller {
     @Autowired
     CCTVService cs;
 
-    @GetMapping("/detect")
+    @GetMapping("/user/detect")
     public String detect(Model mo) {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         List<CCTV_Auth_DTO> user_cctv_list= cas.select_user_cctv(user_id);
@@ -42,7 +42,7 @@ public class CCTV_Auth_Controller {
         return "detect";
     }
 
-    @GetMapping("/cctv_add_auth")
+    @GetMapping("/user/cctv_add_auth")
     public String cctv_add_auth(Model mo) {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         List<CCTVEntity> cctv_list= cs.select_cctv();
@@ -52,7 +52,7 @@ public class CCTV_Auth_Controller {
         return "cctv_add_auth";
     }
 
-    @GetMapping("/cctv_auth_select")
+    @GetMapping("/user/cctv_auth_select")
     public String cctv_auth_select(@RequestParam ("cctv_name") String cctv_name, CCTV_Auth_DTO dto) {
         String user_id = SecurityContextHolder.getContext().getAuthentication().getName();
         dto.setId(user_id);
@@ -60,12 +60,12 @@ public class CCTV_Auth_Controller {
         dto.setCctv_add_confirm("대기");
         CCTV_Auth_Entity cae = dto.entity();
         cas.insert_cctv_auth(cae);
-        return "redirect:/cctv_add_auth";
+        return "redirect:/user/cctv_add_auth";
     }
 
-    @GetMapping("/user_cctv_del")
+    @GetMapping("/user/user_cctv_del")
     public String user_cctv_del(@RequestParam ("cctv_auth_num") long cctv_auth_num){
         cas.user_cctv_del(cctv_auth_num);
-        return "redirect:/cctv_add_auth";
+        return "redirect:/user/cctv_add_auth";
     }
 }

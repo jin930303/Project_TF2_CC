@@ -27,7 +27,7 @@ public class MqttController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @PostMapping("/cctv_link")
+    @PostMapping("/user/cctv_link")
     public String cctv_link(@RequestParam("cctv_url") String cctv_url,
                             @RequestParam("cctv_name") String cctv_name,
                             @RequestParam("detect_available") String detect_available,
@@ -90,7 +90,7 @@ public class MqttController {
         redirectAttributes.addFlashAttribute("send_object", send_object);
 
         //... 이전 URL을 유지하며 리다이렉트
-        return "redirect:/detect";
+        return "redirect:/user/detect";
     }
 
 }

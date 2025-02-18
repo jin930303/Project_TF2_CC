@@ -40,6 +40,11 @@ public class CCTV_Auth_ServiceImp implements CCTV_Auth_Service {
     }
 
     @Override
+    public void delete_cctv_list_all(String cctvName) {
+        car.del_user_cctvlist(cctvName);
+    }
+
+    @Override
     public void insert_cctv_auth(CCTV_Auth_Entity dto) {
         car.save(dto);
     }

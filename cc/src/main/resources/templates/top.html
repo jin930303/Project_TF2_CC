@@ -14,29 +14,29 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="main">차량탐지체계</a>
+      <a class="navbar-brand" href="/main">차량탐지체계</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="main">Home</a></li>
+      <li class="active"><a href="/main">Home</a></li>
 
-      <li class="active"><a href="detect">차량탐지</a></li>
+      <li class="active"><a href="/user/detect">차량탐지</a></li>
 
-      <li class="active"><a href="board">탐지기록</a></li>
+      <li class="active"><a href="/user/board">탐지기록</a></li>
 
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><p id="nowtime"></p></a></li>
-      <li class="active"><a href="cctv_manage" sec:authorize="hasAuthority('ADMIN')">CCTV 관리</a></li>
+      <li class="active"><a href="/admin/cctv_manage" sec:authorize="hasAuthority('ADMIN')">CCTV 관리</a></li>
       <li class="active"><a href="#" sec:authorize="hasAuthority('ADMIN')">관리자님 반갑습니다.</a></li>
 
-      <li class="active"><a href="cctv_add_auth" sec:authorize="hasAuthority('USER')">CCTV 추가</a></li>
-      <li class="active"><a href="#" sec:authorize="hasAuthority('USER')">회원님 반갑습니다.</a></li>
+      <li class="active"><a href="/user/cctv_add_auth" sec:authorize="hasAuthority('USER')">CCTV 추가</a></li>
+      <li class="active"><a href="#" sec:authorize="hasAuthority('USER')" th:text="${#authentication.name}+' 회원님 반갑습니다.'"></a></li>
 
 
-      <li><a href="register" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-user"></span> 회원가입</a>
-      <li><a href="login" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-log-in"></span> 로그인</a>
-      <li><a href="logout" sec:authorize="isAuthenticated()"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a>
+      <li><a href="/register" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-user"></span> 회원가입</a>
+      <li><a href="/login" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-log-in"></span> 로그인</a>
+      <li><a href="/logout" sec:authorize="isAuthenticated()"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a>
     </ul>
   </div>
 </nav>

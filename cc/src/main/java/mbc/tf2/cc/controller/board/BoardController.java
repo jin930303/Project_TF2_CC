@@ -21,7 +21,7 @@ public class BoardController {
     @Autowired
     BoardRepository boardRepository;
 
-    @GetMapping("/board")
+    @GetMapping("/user/board")
     public String getBoardList(
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size, Model mo ) {
 
@@ -46,18 +46,18 @@ public class BoardController {
         return "board";
     }
 
-    @GetMapping("/confirm")
+    @GetMapping("/user/confirm")
     public String confirm(@RequestParam("bid")long bid,Model mo )
     {
         boardService.confirm(bid);
-        return "redirect:/board";
+        return "redirect:/user/board";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/user/delete")
     public String delete(@RequestParam("bid")long bid)
     {
         boardRepository.deleteById(bid);
-        return "redirect:/board";
+        return "redirect:/user/board";
     }
 
 

@@ -39,7 +39,7 @@ public class CCTVController {
     @Autowired
     CCTV_Auth_Service cas;
 
-    @GetMapping("/cctv_manage")
+    @GetMapping("/admin/cctv_manage")
     public String cctv_manage(Model mo) {
         List<CCTVEntity> cctv_list= cs.select_cctv();
         List<CCTV_Auth_DTO> user_cctv_list_all= cas.select_user_cctv_all();
@@ -48,7 +48,7 @@ public class CCTVController {
         return "cctv_manage";
     }
 
-    @PostMapping("/cctv_type")
+    @PostMapping("/admin/cctv_type")
     public String cctv(Model mo,
                        @RequestParam("cctv_location") String cctv_location,
                        @RequestParam("roadtype") String roadtype) {
@@ -151,7 +151,7 @@ public class CCTVController {
         return "cctv_manage";
     }
 
-    @PostMapping("/cctv_select")
+    @PostMapping("/admin/cctv_select")
     public String cctv_select(@RequestParam("cctv_url") String cctv_url,
                               @RequestParam("selected_cctv_location") String cctv_location,
                               @RequestParam("cctv_name") String cctv_name,
@@ -189,28 +189,29 @@ public class CCTVController {
         cs.insert_cctv(dto);
         List<CCTVEntity> cctv_list= cs.select_cctv();
         mo.addAttribute("cctv_list", cctv_list);
-        return "redirect:/cctv_manage";
+        return "redirect:/admin/cctv_manage";
     }
 
-    @GetMapping("/cctv_list_del")
+    @GetMapping("/admin/cctv_list_del")
     public String cctv_list_del(Model mo, @RequestParam("cctv_name") String cctv_name) {
         cs.delete_cctv_list(cctv_name);
+        cas.delete_cctv_list_all(cctv_name);
         List<CCTVEntity> cctv_list= cs.select_cctv();
         mo.addAttribute("cctv_list", cctv_list);
-        return "redirect:/cctv_manage";
+        return "redirect:/admin/cctv_manage";
     }
 
-    @GetMapping("/cctv_confirm")
+    @GetMapping("/admin/cctv_confirm")
     public String cctv_confirm(@RequestParam("cctv_auth_num") long cctv_auth_num, CCTV_Auth_DTO dto) {
         dto.setCctv_add_confirm("승인");
         cas.auth_update_confirm(cctv_auth_num);
-        return "redirect:/cctv_manage";
+        return "redirect:/admin/cctv_manage";
     }
 
-    @GetMapping("/cctv_wait")
+    @GetMapping("/admin/cctv_wait")
     public String cctv_wait(@RequestParam("cctv_auth_num") long cctv_auth_num, CCTV_Auth_DTO dto) {
         dto.setCctv_add_confirm("보류");
         cas.auth_update_wait(cctv_auth_num);
-        return "redirect:/cctv_select";
+        return "redirect:/admin/cctv_manage";
     }
 }

@@ -31,8 +31,8 @@
       <img th:src="@{'data:image/jpeg;base64,' + ${board.base64ImgFile}}" alt="이미지 없음" width="90" height="120">
     </td>
     <td th:text="${board.confirm=='0'?'미확인':'확인'}" ></td>
-    <td><a th:href="@{/confirm(bid=${board.id})}" id="confirm" >확인</a>
-        <a th:href="@{/delete(bid=${board.id})}" id="deleteid">삭제</a></td>
+    <td><a th:href="@{/user/confirm(bid=${board.id})}" id="confirm" >확인</a>
+        <a th:href="@{/user/delete(bid=${board.id})}" id="deleteid">삭제</a></td>
   </tr>
   </tbody>
 </table>
@@ -50,16 +50,16 @@
 
 <div id="pagination">
   <!-- 이전 그룹 버튼 -->
-  <a th:if="${startPage > 1}" th:href="@{/board(page=${startPage - 1}, size=${size})}">이전</a>
+  <a th:if="${startPage > 1}" th:href="@{/user/board(page=${startPage - 1}, size=${size})}">이전</a>
 
   <!-- 페이지네이션 (5개 단위) -->
   <span th:each="i : ${#numbers.sequence(startPage, endPage)}">
-      <a th:if="${i != page}" th:href="@{/board(page=${i}, size=${size})}" th:text="${i}"></a>
+      <a th:if="${i != page}" th:href="@{/user/board(page=${i}, size=${size})}" th:text="${i}"></a>
       <span th:if="${i == page}" th:text="${i}" style="font-weight: bold;"></span>
     </span>
 
   <!-- 다음 그룹 버튼 -->
-  <a th:if="${endPage < totalPages}" th:href="@{/board(page=${endPage + 1}, size=${size})}">다음</a>
+  <a th:if="${endPage < totalPages}" th:href="@{/user/board(page=${endPage + 1}, size=${size})}">다음</a>
 </div>
 
 

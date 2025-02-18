@@ -45,12 +45,12 @@ public class Security {
         /* @formatter:off */
         http
         .csrf()
-        .ignoringRequestMatchers("/**")  // 특정 경로에서만 CSRF 비활성화
+        .ignoringRequestMatchers("/register", "/admin/cctv_link", "/admin/cctv_type", "/admin/cctv_select")  // 특정 경로에서만 CSRF 비활성화
         .and()
         .authorizeRequests()
-        .requestMatchers("/**", "/css/**", "/js/**", "/image/**").permitAll()
-        .requestMatchers("/**").hasAuthority("Admin")  // Admin 전용
-        .requestMatchers("/**").hasAuthority("Normal") // Normal 전용
+        .requestMatchers("/", "/main", "/register", "/login", "/css/**", "/js/**", "/image/**").permitAll()
+        .requestMatchers("/user/**").hasAuthority("USER") // User 전용
+        .requestMatchers("/**").hasAuthority("ADMIN")  // Admin 전용
         .anyRequest().authenticated() // 그 외는 인증 필요
         .and()
         .formLogin()

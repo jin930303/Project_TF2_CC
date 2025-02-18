@@ -11,13 +11,12 @@
 <body>
 <div id="cctv_setting_part">
     <div class="setting_lower_part">
-    <form th:action="@{/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
+    <form th:action="@{/user/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
         <!-- CCTV 선택 -->
         <div class="choose_cctv">
             <h3>CCTV</h3>
             <select id="cctv_url" name="cctv_url">
-                <option th:each="cctv : ${user_cctv_list}" th:value="${cctv.cctvurl}" th:text="${cctv.cctv_name}"</option>
-
+                <option th:each="cctv : ${user_cctv_list}" th:value="${cctv.cctvurl}" th:text="${cctv.cctv_name}"></option>
             </select>
 
             <input type="hidden" id="cctv_name" name="cctv_name" value="default">

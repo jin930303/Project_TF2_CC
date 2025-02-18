@@ -19,7 +19,7 @@
                 <td th:text="${list['cctv_location']}"></td>
                 <td th:text="${list['cctv_name']}"></td>
                 <td>
-                    <button type="button" th:onclick="|location.href='@{/cctv_auth_select(cctv_name=${list.cctv_name})}'|">추가</button>
+                    <button type="button" th:onclick="|location.href='@{/user/cctv_auth_select(cctv_name=${list.cctv_name})}'|">추가</button>
                 </td>
             </tr>
         </table>
@@ -34,7 +34,7 @@
                 <td th:text="${user_list['cctv_location']}"></td>
                 <td th:text="${user_list['cctv_name']}"></td>
                 <td>
-                    <button type="button" th:onclick="|location.href='@{/user_cctv_del(cctv_auth_num=${user_list.cctv_auth_num})}'|">삭제</button>
+                    <button type="button" th:onclick="|location.href='@{/user/user_cctv_del(cctv_auth_num=${user_list.cctv_auth_num})}'|">삭제</button>
                 </td>
             </tr>
         </table>

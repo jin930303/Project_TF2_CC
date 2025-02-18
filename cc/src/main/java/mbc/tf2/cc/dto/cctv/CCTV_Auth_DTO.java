@@ -11,9 +11,9 @@ public class CCTV_Auth_DTO {
     private Long cctv_auth_num;
     private String id;
     private String cctv_name;
-    private String cctvurl;
-    private String cctv_location;
     private String cctv_add_confirm;
+    private String cctv_location;
+    private String cctvurl;
 
     public CCTV_Auth_Entity entity(){
         return CCTV_Auth_Entity.builder()

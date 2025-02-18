@@ -19,4 +19,5 @@ public interface CCTV_Auth_Service {
 
     void auth_update_wait(long cctvAuthNum);
 
+    void delete_cctv_list_all(String cctvName);
 }
