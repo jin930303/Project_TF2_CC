@@ -3,11 +3,11 @@ import os
 from ultralytics import YOLO
 
 # 1. JSON 파일이 있는 폴더 경로
-json_dir = "C:/Users/shk0349/Documents/차종분류/Final/json/train"
-images_dir = "C:/Users/shk0349/Documents/차종분류/Final/image/train"  # 이미지 폴더 경로
-temp_labels_dir = "C:/Users/shk0349/Documents/차종분류/Final/json/etc"  # YOLO 형식 라벨 임시 저장 폴더
-train_labels_dir = "C:/Users/shk0349/Documents/차종분류/Final/json/train"  # 훈련용 라벨 폴더
-val_labels_dir = "C:/Users/shk0349/Documents/차종분류/Final/json/val"  # 검증용 라벨 폴더
+json_dir = "C:/Users/mkm1022/Documents/Final/json/train"
+images_dir = "C:/Users/mkm1022/Documents/Final/image/train"  # 이미지 폴더 경로
+temp_labels_dir = "C:/Users/mkm1022/Documents/Final/json/etc"  # YOLO 형식 라벨 임시 저장 폴더
+train_labels_dir = "C:/Users/mkm1022/Documents/Final/json/train"  # 훈련용 라벨 폴더
+val_labels_dir = "C:/Users/mkm1022/Documents/Final/json/val"  # 검증용 라벨 폴더
 
 os.makedirs(train_labels_dir, exist_ok=True)
 os.makedirs(val_labels_dir, exist_ok=True)
@@ -62,7 +62,11 @@ for file_name in os.listdir(json_dir):
             print(f"{file_name} - COCO 형식이 아닙니다.")
 
 if __name__ == '__main__':
+<<<<<<< HEAD
+    model = YOLO("yolov9t.pt")
+=======
     model = YOLO("yolov10n.pt")
+>>>>>>> origin/master
 
     model.train(
         data = "data.yaml",  # data.yaml 적용
@@ -71,6 +75,17 @@ if __name__ == '__main__':
         batch = 2,    # 배치 크기
         name = "Car_Training ver.",
         half = True,    # 혼합 정밀도 훈련
+<<<<<<< HEAD
+        patience = 10,  # 🚀 조기 종료 기준 (10~20)
+        optimizer = "sgd",  # 🚀 Adam 사용 (메모리 절약 & 학습 안정성)
+        cache = False,  # ❌ GTX 1060은 VRAM 부족하므로 캐싱 비활성화
+        workers = 4,  # 🚀 CPU 코어 수에 맞춰 데이터 로딩 최적화
+        device = "cuda",  # 🚀 GPU 사용
+        cos_lr = True,  # 🚀 Cosine Learning Rate Scheduler 사용
+        multi_scale = False,  # ❌ GTX 1060에서는 메모리 부족 가능성 있으므로 비활성화
+        close_mosaic = 10,  # 🚀 마지막 10에포크 동안 Mosiac Augmentation 비활성화
+        resume = False  # 기존 체크포인트에서 재학습 여부
+=======
         patience = 10,  # 조기 종료 적용
         optimizer = "adam",  # Adam 사용 (메모리 절약 & 학습 안정성)
         cache = False,  # GPU VRAM 고려 캐싱 비활성화
@@ -80,6 +95,7 @@ if __name__ == '__main__':
         multi_scale = False,  # GPU VRAM 고려 멀티스케일 비활성화
         close_mosaic = 10,  # 마지막 10에포크 동안 모자이크 Augmentation 비활성화
         resume = False  # 기존 체크포인트에서 재학습 비활성화
+>>>>>>> origin/master
     )
 
 if __name__ == '__main__':

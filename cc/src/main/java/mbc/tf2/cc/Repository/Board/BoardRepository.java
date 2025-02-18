@@ -1,10 +1,14 @@
-package mbc.tf2.cc.Repository.Board;
+package mbc.tf2.cc.Repository;
 
 import jakarta.transaction.Transactional;
-import mbc.tf2.cc.Entity.Board.BoardEntity;
+import mbc.tf2.cc.DTO.BoardDTO;
+import mbc.tf2.cc.Entity.BoardEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,16 +21,16 @@ public interface BoardRepository extends JpaRepository<BoardEntity,Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "SELECT new mbc.tf2.cc.boardDTO.BoardDTO( " +
-            "  b.id, " +
-            "  FUNCTION('TO_CHAR', b.startTime, 'YY-MM-DD HH24:MI:SS'), " + // JPQL에서 TO_CHAR 사용 가능
-            "  b.title, " +
-            "  t.name, " +
-            "  b.imgFile, " +
-            "  b.confirm " +
-            ") " +
-            "FROM BoardEntity b " +
-            "JOIN b.tag t " +
-            "ORDER BY b.id DESC",nativeQuery = true)
-    List<BoardEntity> findjoin();
+    @Query(value = """
+    SELECT b.id, b.tag_id, 
+    TO_CHAR(TO_DATE(b.start_time, 'YYYY-MM-DD HH24:MI:SS'), 'YY-MM-DD HH24:MI:SS') as start_time, 
+    b.title, t.name as tag_name, b.img_file, b.confirm 
+    FROM board b 
+    JOIN tag t ON b.tag_id = t.id 
+    ORDER BY b.id 
+    OFFSET :offset ROWS FETCH NEXT :size ROWS ONLY
+""", nativeQuery = true)
+    List<BoardEntity> findjoin(@Param("size") int size, @Param("offset") int offset);
+
+
 }
