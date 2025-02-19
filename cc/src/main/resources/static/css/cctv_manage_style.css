@@ -12,7 +12,7 @@ body {
 
 h3 {
     color: #2c3e50;
-    font-size: 1.4rem;
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 
@@ -33,9 +33,9 @@ h3 {
 
 /* 드롭다운 스타일 */
 select {
-    width: 100%;
+    width: 70%;
     padding: 8px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -49,20 +49,44 @@ select:focus {
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
-/* 버튼 스타일 */
-input[type="submit"] {
+.choose_location select {
+    width: 50%;
+}
+
+/* 버튼 스타일 - 공통 */
+input[type="submit"], button {
     background-color: #3498db;
     color: white;
-    padding: 10px 20px;
+    margin: 0 5px;
+    padding: 5px;
+    width: 65px;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, button:hover {
     background-color: #2980b9;
+}
+
+/* 삭제 버튼 */
+.delete {
+    background-color: #ff7171;
+}
+
+.delete:hover{
+    background-color: #c95858;
+}
+
+/* 보류 버튼 */
+.postpone:last-child{
+    background-color: #64c153
+}
+
+.postpone:last-child:hover{
+    background-color: #509744
 }
 
 /* 테이블 스타일 */
@@ -73,7 +97,7 @@ table {
 }
 
 th, td {
-    text-align: left;
+    text-align: center;
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
@@ -88,14 +112,23 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-/* 삭제 링크 스타일 */
-a {
-    color: #e74c3c;
-    text-decoration: none;
-    font-weight: bold;
+/* 첫번째 열 - 지역 */
+th:first-child {
+    width: 145px;
 }
 
-a:hover {
-    text-decoration: underline;
-    color: #c0392b;
+/* 두번째 행 - CCTV 이름 */
+td:nth-child(2) {
+    text-align: left;
+}
+
+/* 승인된 CCTV목록 마지막 행 - 승인 보류 버튼)*/
+#selected_cctv th:last-child {
+    width: 90px;
+}
+
+/* 대기/보류 CCTV목록 마지막 행(삭제 버튼)*/
+#waiting_cctv th:last-child {
+    text-align: center;
+    width: 175px;
 }

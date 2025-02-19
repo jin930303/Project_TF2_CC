@@ -11,7 +11,7 @@ body {
 
 h3 {
     color: #2c3e50;
-    font-size: 1.4rem;
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 
@@ -24,17 +24,39 @@ h3 {
     margin: 0 auto;
 }
 
-.setting_upper_part, .setting_lower_part {
+/* 탐지 전 설정 */
+.setting_part {
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #ddd;
 }
 
+/* CCTV 선택 */
+.choose_cctv {
+    width: 75%;
+    float: left;
+    padding-right: 2.5%;
+}
+
+/* 객체 선택 */
+.choose_object {
+    width: 20%;
+    float: left;
+    padding-left: 2.5%;
+}
+
+/* 객체 탐지 시행 버튼 */
+.remote_detect {
+    width: 100%;
+    text-align: center;
+}
+
+
 /* 드롭다운 스타일 */
 select {
     width: 100%;
     padding: 8px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
@@ -49,20 +71,22 @@ select:focus {
 }
 
 /* 버튼 스타일 */
-input[type="submit"] {
+input[type="submit"], button {
     background-color: #3498db;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100px;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, button: hover {
     background-color: #2980b9;
 }
+
 
 /* 탐지 결과 표시 */
 #cctv_part {
@@ -96,39 +120,4 @@ input[type="submit"]:hover {
     border-radius: 10px;
     border: 2px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 테이블 스타일 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th, td {
-    text-align: left;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-    color: #333;
-    font-weight: bold;
-}
-
-tr:hover {
-    background-color: #f9f9f9;
-}
-
-/* 삭제 링크 스타일 */
-a {
-    color: #e74c3c;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #c0392b;
 }

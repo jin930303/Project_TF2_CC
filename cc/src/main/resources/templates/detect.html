@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="cctv_setting_part">
-    <div class="setting_lower_part">
+    <div class="setting_part">
     <form th:action="@{/user/cctv_link}" method="post" enctype="multipart/form-data" id="cctv_Link">
         <!-- CCTV 선택 -->
         <div class="choose_cctv">
@@ -35,6 +35,8 @@
                 <option value="pickup_truck">픽업트럭</option>
                 <option value="motor_cycle">오토바이</option>
             </select>
+        </div>
+        <div class="remote_detect">
             <input type="submit" value="분석">
             <button type="button" onclick="setDetectAvailableExit()">종료</button>
             <script type="text/javascript" th:src="@{/script/detect_exit.js}"></script>
