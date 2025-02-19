@@ -49,7 +49,8 @@
     <!-- 탐지 결과 표시 -->
     <div id="cctv_part">
         <div id="cctv_head">
-            <h3 th:text="${(cctv_name != null ? cctv_name : '') + ' ' + (send_object != null ? send_object : '') + ' 객체 탐지 결과'}"></h3>
+            <h3 th:text="${(cctv_name != null ? cctv_name : '') + ' ' +
+            (send_object != null ? send_object : '') + ' 객체 탐지 결과'}"></h3>
         </div>
         <div id="cctv_detect_part">
             <img id = "cctv_detect_view">
