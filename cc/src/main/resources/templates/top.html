@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="menu"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<link th:href="@{/css/top_style.css}" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/top_style.css}" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -17,7 +17,6 @@
       <a class="navbar-brand" href="/main">차량탐지체계</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/main">Home</a></li>
 
       <li class="active"><a href="/user/detect">차량탐지</a></li>
 
@@ -32,11 +31,11 @@
 
       <li class="active"><a href="/user/cctv_add_auth" sec:authorize="hasAuthority('USER')">CCTV 추가</a></li>
       <li class="active"><a href="#" sec:authorize="hasAuthority('USER')" th:text="${#authentication.name}+' 회원님 반갑습니다.'"></a></li>
-
-
+      <li class="active"><a href="/user/mypage" sec:authorize="isAuthenticated()">마이 페이지</a></li>
       <li><a href="/register" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-user"></span> 회원가입</a>
       <li><a href="/login" sec:authorize="isAnonymous()"><span class="glyphicon glyphicon-log-in"></span> 로그인</a>
       <li><a href="/logout" sec:authorize="isAuthenticated()"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a>
+
     </ul>
   </div>
 </nav>

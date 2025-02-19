@@ -9,5 +9,5 @@ public interface BoardService {
      void confirm(long bid);
 
 
-     Page<BoardDTO> getBoardList(int page, int size);
+     Page<BoardDTO> getBoardList(int page, int size, String status);
 }
