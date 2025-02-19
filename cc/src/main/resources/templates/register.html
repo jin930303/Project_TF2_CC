@@ -6,6 +6,7 @@
     <title>Title</title>
 </head>
 <body>
+<p><span th:text="${member.memberId}"></span></p>
 <h2>회원가입</h2>
     <form th:action="@{/register}" th:object="${member}" method="post">
       <label>아이디:</label> <input type="text" th:field="*{memberId}" required/><br/>

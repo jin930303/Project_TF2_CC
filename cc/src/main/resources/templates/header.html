@@ -1,0 +1,17 @@
+<!-- 공통 헤더 (header.html) -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">홈</a></li>
+                <li><a href="/myPage" th:if="${session.loginUser != null}">마이페이지</a></li>
+                <li th:if="${session.loginUser != null}">
+                    <span th:text="${session.loginUser.memberId} + '님, 환영합니다!'"></span>
+                </li>
+                <li th:if="${session.loginUser == null}"><a href="/login">로그인</a></li>
+                <li th:if="${session.loginUser != null}"><a href="/logout">로그아웃</a></li>
+            </ul>
+        </nav>
+    </header>
+</div>
