@@ -1,6 +1,7 @@
 package mbc.tf2.cc.controller.board;
 
 import mbc.tf2.cc.dto.board.BoardDTO;
+import mbc.tf2.cc.entity.board.BoardEntity;
 import mbc.tf2.cc.repository.board.BoardRepository;
 import mbc.tf2.cc.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BoardController {
@@ -60,5 +64,25 @@ public class BoardController {
         return "redirect:/user/board";
     }
 
+    @GetMapping("/user/boards")
+    public String choice(@RequestParam(value = "status",required = false,defaultValue = "all")String status,Model mo)
+    {
+        List<BoardEntity> boards =boardRepository.findAll();
+        if (!"all".equals(status)) {
+            boards = boards.stream()
+                    .filter(board -> {
+                        if ("confirmed".equals(status)) {
+                            return !"0".equals(board.getConfirm());
+                        } else if ("unconfirmed".equals(status)) {
+                            return "0".equals(board.getConfirm());
+                        }
+                        return true;
+                    })
+                    .toList();
+
+        }
+        mo.addAttribute("boards",boards);
+        return "board";
+    }
 
 }
