@@ -27,10 +27,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardDTO> getBoardList(int page, int size) {
+    public Page<BoardDTO> getBoardList(int page, int size, String status) {
 
         int offset = (page - 1) * size; // OFFSET 계산
-        List<BoardEntity> boardEntities = boardRepository.findjoin(size, offset);
+        List<BoardEntity> boardEntities = boardRepository.findjoin(size, offset,status);
 
         List<BoardDTO> boardDTOs = boardEntities.stream().map(board -> {
             BoardDTO dto = new BoardDTO();

@@ -27,19 +27,14 @@ public class BoardController {
 
     @GetMapping("/user/board")
     public String getBoardList(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size, Model mo ) {
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,  @RequestParam(defaultValue = "all") String status,Model mo ) {
 
-        Page<BoardDTO> boardPage = boardService.getBoardList(page, size);
+        Page<BoardDTO> boardPage = boardService.getBoardList(page, size,status);
 
         int totalPages = boardPage.getTotalPages();
         int groupSize = 5;
         int startPage = ((page - 1) / groupSize) * groupSize + 1;
         int endPage = Math.min(startPage + groupSize - 1, totalPages);
-
-        System.out.println("현재 페이지: " + page);
-        System.out.println("전체 페이지: " + totalPages);
-        System.out.println("시작 페이지: " + startPage);
-        System.out.println("끝 페이지: " + endPage);
 
         mo.addAttribute("boards", boardPage.getContent());
         mo.addAttribute("page", page);
@@ -47,42 +42,22 @@ public class BoardController {
         mo.addAttribute("startPage",startPage);
         mo.addAttribute("size", size);
         mo.addAttribute("endPage", endPage);
+        mo.addAttribute("status",status);
         return "board";
     }
 
     @GetMapping("/user/confirm")
-    public String confirm(@RequestParam("bid")long bid,Model mo )
+    public String confirm(@RequestParam("bid")long bid,@RequestParam("page")int page)
     {
         boardService.confirm(bid);
-        return "redirect:/user/board";
+        return "redirect:/user/board?page="+page;
     }
 
     @GetMapping("/user/delete")
-    public String delete(@RequestParam("bid")long bid)
+    public String delete(@RequestParam("bid")long bid,@RequestParam("page")int page)
     {
         boardRepository.deleteById(bid);
-        return "redirect:/user/board";
-    }
-
-    @GetMapping("/user/boards")
-    public String choice(@RequestParam(value = "status",required = false,defaultValue = "all")String status,Model mo)
-    {
-        List<BoardEntity> boards =boardRepository.findAll();
-        if (!"all".equals(status)) {
-            boards = boards.stream()
-                    .filter(board -> {
-                        if ("confirmed".equals(status)) {
-                            return !"0".equals(board.getConfirm());
-                        } else if ("unconfirmed".equals(status)) {
-                            return "0".equals(board.getConfirm());
-                        }
-                        return true;
-                    })
-                    .toList();
-
-        }
-        mo.addAttribute("boards",boards);
-        return "board";
+        return "redirect:/user/board?page="+page;
     }
 
 }

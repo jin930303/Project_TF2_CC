@@ -24,9 +24,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity,Long> {
     b.title, t.name as tag_name, b.img_file, b.confirm 
     FROM board b 
     JOIN tag t ON b.tag_id = t.id 
+    where (:status = 'all' or b.confirm = :status)
     ORDER BY b.id desc
     OFFSET :offset ROWS FETCH NEXT :size ROWS ONLY""", nativeQuery = true)
-    List<BoardEntity> findjoin(@Param("size") int size, @Param("offset") int offset);
+    List<BoardEntity> findjoin(@Param("size") int size, @Param("offset") int offset, String status);
 
 
 }
