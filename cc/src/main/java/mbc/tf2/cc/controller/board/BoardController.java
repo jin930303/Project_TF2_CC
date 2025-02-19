@@ -27,9 +27,10 @@ public class BoardController {
 
     @GetMapping("/user/board")
     public String getBoardList(
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,  @RequestParam(defaultValue = "all") String status,Model mo ) {
-
-        Page<BoardDTO> boardPage = boardService.getBoardList(page, size,status);
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "all") String status,Model mo )
+    {
+        Page<BoardDTO> boardPage = boardService.getBoardList(page, size, status);
 
         int totalPages = boardPage.getTotalPages();
         int groupSize = 5;

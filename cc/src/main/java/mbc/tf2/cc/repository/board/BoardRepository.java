@@ -19,11 +19,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity,Long> {
     @Modifying
     @Transactional
     @Query(value = """
-    SELECT b.id, b.tag_id, 
-    TO_CHAR(TO_DATE(b.start_time, 'YYYY-MM-DD HH24:MI:SS'), 'YY-MM-DD HH24:MI:SS') as start_time, 
-    b.title, t.name as tag_name, b.img_file, b.confirm 
-    FROM board b 
-    JOIN tag t ON b.tag_id = t.id 
+    SELECT b.id, b.tag_id,
+    TO_CHAR(TO_DATE(b.start_time, 'YYYY-MM-DD HH24:MI:SS'), 'YY-MM-DD HH24:MI:SS') as start_time,
+    b.title, t.name as tag_name, b.img_file, b.confirm
+    FROM board b
+    JOIN tag t ON b.tag_id = t.id
     where (:status = 'all' or b.confirm = :status)
     ORDER BY b.id desc
     OFFSET :offset ROWS FETCH NEXT :size ROWS ONLY""", nativeQuery = true)
