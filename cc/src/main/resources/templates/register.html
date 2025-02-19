@@ -6,8 +6,9 @@
     <link th:href="@{/css/member_style.css}" rel="stylesheet">
     <title>회원가입</title>
 </head>
-<div id="member_page">
-    <h3>회원가입</h3>
+<body>
+<p><span th:text="${member.memberId}"></span></p>
+<h2>회원가입</h2>
     <form th:action="@{/register}" th:object="${member}" method="post">
 
     <table>

@@ -39,7 +39,9 @@ public class Security {
                                 "/register",
                                 "/admin/cctv_link",
                                 "/admin/cctv_type",
-                                "/admin/cctv_select"
+                                "/admin/cctv_select",
+                                "/uesr/updateUser",
+                                "/uesr/changePassword"
                         )
                 )
                 .authorizeHttpRequests(authz -> authz
@@ -54,7 +56,7 @@ public class Security {
                         .loginProcessingUrl("/loginProcess")
                         .usernameParameter("memberId")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/main")
                         .failureUrl("/")
                         .successHandler((request, response, authentication) -> {
                             System.out.println("로그인 ID : " + authentication.getName());
