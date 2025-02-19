@@ -1,0 +1,133 @@
+@charset utf-8;
+
+/*전체 설정*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* 페이지 설정 */
+#table_page {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 제목 , 상태 검색 설정 */
+h3 {
+    color: #2c3e50;
+    font-size: 2rem;
+    text-align: left;
+    margin: 0;
+    width: 50%;
+    float: left;
+    height:30px;
+}
+
+.check_confirm {
+    width: 50%;
+    height: 30px;
+    line-height:30px;
+    float: right;
+    text-align: right;
+}
+
+.check_confirm button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+    width: 100px;
+    margin: 0 3%;
+}
+
+.check_confirm button:hover {
+    background-color: #2980b9;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+
+/* 테이블 3번째 - 작성일 */
+th:nth-child(3) {
+    width: 80px;
+}
+
+/* 테이블 5번째 - 이미지 */
+th:nth-child(5) {
+    width: 100px;
+}
+
+/* 테이블 7번째 - 확인/삭제 */
+td:nth-child(7){
+    width: 40px;
+}
+
+td:nth-child(7) a {
+    display: block;
+    margin: auto;
+    width: 36px;
+    height: 23px;
+    margin: 5px auto;
+    padding: 1px 2px;
+}
+
+td:nth-child(7) a:first-child {
+    color: #1d82c7;
+}
+
+td:nth-child(7) a:last-child {
+    color: #c95656;
+}
+
+td:nth-child(7) a:hover {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+/* 페이징 처리 */
+#pagination {
+    margin: auto;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+#pagination a{
+    color: #555;
+}
+
+#pagination a:hover{
+    color: #222;
+    font-weight: bold;
+}
