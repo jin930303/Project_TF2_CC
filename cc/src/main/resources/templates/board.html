@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="table_page">
-  <h3>게시판</h3>
+  <h3>탐지기록</h3>
   <div class="check_confirm">
   <form th:action="@{/user/board}" method="get">
     <label for="status">상태 선택: </label>
@@ -44,17 +44,17 @@
       </td>
       <td th:text="${board.confirm=='0'?'미확인':'확인'}" ></td>
       <td><a th:href="@{/user/confirm(bid=${board.id}, page=${page})}" id="confirm" >확인</a>
-          <a th:href="@{/user/delete(bid=${board.id}, page=${page})}" id="deleteid">삭제</a></td>
+          <a th:href="@{/user/delete(bid=${board.id}, page=${page})}" class="deleteBtn">삭제</a></td>
     </tr>
     </tbody>
   </table>
   <script>
     $(document).ready(function(){
-      $("#deleteid").on("click", function(event){
-        event.preventDefault();
-        if(confirm('정말로 삭제할까요?')) {
-          window.location.href = $(this).attr("href");
-        }
+      $(document).on("click", ".deleteBtn", function(event){
+    event.preventDefault();
+    if(confirm('정말로 삭제할까요?')) {
+      window.location.href = $(this).attr("href");
+    }
       });
     });
   </script>
