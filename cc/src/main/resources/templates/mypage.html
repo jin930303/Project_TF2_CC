@@ -30,10 +30,10 @@
 
     <!-- 수정 페이지로 이동할 수 있는 링크 -->
 <!--    <a href="/user/updateUser" th:if="${member != null}">정보 수정</a>-->
-    <button type="button" onclick="location.href='/user/updateUser'" th:if="${member != null}">정보 수정</button>
+    <button type="button" class="mypage" onclick="location.href='/user/updateUser'" th:if="${member != null}">정보 수정</button>
     <!-- 비밀번호 변경 링크 -->
 <!--    <a href="/user/changePassword" th:if="${member != null}">비밀번호 변경</a>-->
-    <button type="button" onclick="location.href='/user/changePassword'" th:if="${member != null}">비밀 번호</button>
+    <button type="button" class="mypage" onclick="location.href='/user/changePassword'" th:if="${member != null}">비밀번호 변경</button>
   </form>
 
 
