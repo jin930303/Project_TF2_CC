@@ -8,7 +8,8 @@
 </head>
 <body>
 <p><span th:text="${member.memberId}"></span></p>
-<h2>회원가입</h2>
+<div id="member_page">
+<h3>회원가입</h3>
     <form th:action="@{/register}" th:object="${member}" method="post">
 
     <table>
@@ -31,7 +32,6 @@
     </table>
     <button type="submit">가입</button>
     </form>
-
 <!-- 오류 메시지 출력 -->
 <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 </div>

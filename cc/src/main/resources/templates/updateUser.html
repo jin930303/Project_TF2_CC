@@ -2,28 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <div th:insert="~{top :: menu}"></div>
+    <link th:href="@{/css/member_style.css}" rel="stylesheet">
     <meta charset="UTF-8">
     <title>회원 정보 수정</title>
 </head>
 <body>
-<h2>회원정보 수정</h2>
+    <div id="member_page">
+    <h3>회원정보 수정</h3>
 
 
-<form th:action="@{/user/updateUser}" th:object="${member}" method="post">
-    <label>아이디:</label>
-    <input type="text" th:field="*{memberId}" readonly/><br/>
+    <form th:action="@{/user/updateUser}" th:object="${member}" method="post">
 
-    <label>이메일:</label>
-    <input type="email" th:field="*{email}" required/><br/>
+        <table>
+            <tr>
+                <th><label>아이디:</label></th>
+                <td><input type="text" th:field="*{memberId}" readonly/></td>
+            </tr>
+            <tr>
+                <th><label>이메일:</label></th>
+                <td><input type="email" th:field="*{email}" required/></td>
+            </tr>
+            <tr>
+                <th><label>전화번호:</label></th>
+                <td><input type="text" th:field="*{phone}"/></td>
+            </tr>
+        </table>
 
-    <label>전화번호:</label>
-    <input type="text" th:field="*{phone}"/><br/>
+        <button type="submit">변경하기</button>
+        <button type="button" onclick="history.back()">뒤로가기</button>
+    </form>
 
-    <button type="submit">변경하기</button>
-</form>
-
-<!-- 비밀번호 변경 링크 -->
-<a href="/user/changePassword" th:if="${member != null}">비밀번호 변경</a>
-
+<!--    &lt;!&ndash; 비밀번호 변경 링크 &ndash;&gt;-->
+<!--    <a href="/user/changePassword" th:if="${member != null}">비밀번호 변경</a>-->
+    </div>
 </body>
 </html>

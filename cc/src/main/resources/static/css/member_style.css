@@ -62,7 +62,7 @@ h3 {
 #member_page button {
     background-color: #3498db;
     color: white;
-    padding: 10px 20px;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     font-size: 1.5rem;
@@ -74,3 +74,4 @@ h3 {
 #member_page button:hover {
     background-color: #2980b9;
 }
+
