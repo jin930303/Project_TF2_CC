@@ -30,3 +30,4 @@ DB 설계 / 모델 옵티마이저 설정 / 모델 훈련 / 탐지 이미지 저
 **맹관묵**<br>
 모델 옵티마이저 설정 / 모델 훈련 / 로그인 회원 처리 / MQTT 설정 / 내부망 배포
 
+# [TF2_차량감지시스템 ppt](https://github.com/user-attachments/files/18897044/TF2_.250221.pptx)
