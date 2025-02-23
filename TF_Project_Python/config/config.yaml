@@ -1,8 +1,0 @@
-batch_size: 8
-grad_accumulation: 4
-learning_rate: 0.001
-epochs: 50
-patience: 15
-dataset_path: "../dataset/"
-json_path: "../dataset/annotations/Label.json"
-image_path: "../dataset/images/Data_Image"
